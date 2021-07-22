@@ -7,12 +7,14 @@ import java.util.*;
 public class GerenciadorDeSalas {
     
     //atributos da classe
-    Reserva reservas; //lista de reservas desse gerenciador
+    List<Sala> lista_salas;
+    List<Reserva> lista_reservas; //lista de reservas desse gerenciador
     String local; //local da reserva
 
     //construtor da classe
-    public GerenciadorDeSalas(Reserva reservas, String local){
-        this.reservas = reservas;
+    public GerenciadorDeSalas(List<Reserva> lista_reservas, String local){
+        
+        this.lista_reservas = lista_reservas;
         this.local = local;
     }
 
@@ -32,8 +34,8 @@ public class GerenciadorDeSalas {
     public void removeSalaChamada(String nomeDaSala){
         
         //remove da lista de Salas a sala com nome "nomeDaSala"
-        for(Sala sala : this.reservas.salas){
-            if(sala.nome.equals(nomeDaSala)) this.reservas.salas.remove(sala);
+        for(Sala sala : this.lista_salas){
+            if(sala.nome.equals(nomeDaSala)) this.lista_salas.remove(sala);
         }
     }
 
@@ -44,7 +46,7 @@ public class GerenciadorDeSalas {
     *******************************************************/
     public List<Sala> listaDeSalas(){
 
-        return this.reserva_atual.salas;
+        return this.lista_salas;
     }
 
 
@@ -53,7 +55,7 @@ public class GerenciadorDeSalas {
     *********************************************/
     public void adicionaSala(Sala novaSala){
 
-        this.reserva_atual.salas.add(novaSala);
+        this.lista_salas.add(novaSala);
     }
 
 
@@ -65,7 +67,13 @@ public class GerenciadorDeSalas {
     **************************************************************/
     public Reserva reservaSalaChamada(String nomeDaSala, LocalDateTime dataInicial, LocalDateTime dataFinal){
 
+        Reserva nova_reserva = new Reserva(dataInicial, dataFinal);
         
+        for(Sala sala : this.lista_salas){
+            if(sala.nome.equals(nomeDaSala)) nova_reserva.sala = sala;
+        }
+
+        return nova_reserva;
     }
 
 
@@ -75,6 +83,7 @@ public class GerenciadorDeSalas {
     *****************************************************/
     public void cancelaReserva(Reserva cancelada){
 
+        this.lista_reservas.remove(cancelada);
     }
 
 
@@ -84,6 +93,7 @@ public class GerenciadorDeSalas {
     *******************************************************************/
     public Collection<Reserva> reservasParaSala(String nomeSala){
 
+        
     }
 
 
@@ -92,6 +102,7 @@ public class GerenciadorDeSalas {
     * todas as suas reservas.                               *
     *********************************************************/
     public void imprimeReservasDaSala(String nomeSala){
+
 
     }
 
