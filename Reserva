@@ -1,18 +1,17 @@
 
 import java.time.LocalDateTime;
-import java.util.*;
 
 
 public class Reserva {
 
     //atributos da classe
-    List<Sala> salas; //lista de salas
+    Sala sala; //sala que vai ser reservada
     LocalDateTime start; //tempo do inicio da reserva
     LocalDateTime finish; //tempo do termino da reserva
 
     //construtor da classe
-    public Reserva(List<Sala> salas, LocalDateTime start, LocalDateTime finish){
-        this.salas = salas;
+    public Reserva(LocalDateTime start, LocalDateTime finish){
+        
         this.start = start;
         this.finish = finish;
     }
@@ -23,7 +22,7 @@ public class Reserva {
     public Sala criaSala(String nome, String local, int capacidade, String observacoes){
         
         Sala nova_sala = new Sala(nome, local, capacidade, observacoes);
-        this.salas.add(nova_sala);
+        this.sala = nova_sala;
         return nova_sala;
     }
 
