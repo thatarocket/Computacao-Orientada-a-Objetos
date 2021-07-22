@@ -1,0 +1,98 @@
+import java.time.LocalDateTime;
+import java.util.*;
+
+
+// >>> Classe que o objetivo é reservar as salas para as nossas reuniões <<<
+
+public class GerenciadorDeSalas {
+    
+    //atributos da classe
+    Reserva reservas; //lista de reservas desse gerenciador
+    String local; //local da reserva
+
+    //construtor da classe
+    public GerenciadorDeSalas(Reserva reservas, String local){
+        this.reservas = reservas;
+        this.local = local;
+    }
+
+    /****************************************************
+    * Deve receber o nome da sala, a capacidade máxima  *
+    * da sala, e uma descrição.                         *
+    *****************************************************/
+    public void adicionaSalaChamada(String nome, int capacidadeMaxima, String descricao){
+        
+        this.reservas.criaSala(nome, this.local, capacidadeMaxima, descricao);
+    }
+
+
+    /****************************************************
+    * Deve receber o nome da sala, a ser removida.      *
+    *****************************************************/
+    public void removeSalaChamada(String nomeDaSala){
+        
+        //remove da lista de Salas a sala com nome "nomeDaSala"
+        for(Sala sala : this.reservas.salas){
+            if(sala.nome.equals(nomeDaSala)) this.reservas.salas.remove(sala);
+        }
+    }
+
+
+    /******************************************************
+    * Deve devolver uma instancia de List com objetos do  *
+    * do tipo Sala.                                       *
+    *******************************************************/
+    public List<Sala> listaDeSalas(){
+
+        return this.reserva_atual.salas;
+    }
+
+
+    /********************************************
+    * Deve receber uma instancia de Sala        *
+    *********************************************/
+    public void adicionaSala(Sala novaSala){
+
+        this.reserva_atual.salas.add(novaSala);
+    }
+
+
+    /*************************************************************
+    * Deve receber um nome de sala, um LocalDateTime que indica  *
+    * o início da reserva e um outro LocalDateTime para indicar  *
+    * o final da reserva. O método deve devolver uma instância   *
+    * de Reserva.                                                *
+    **************************************************************/
+    public Reserva reservaSalaChamada(String nomeDaSala, LocalDateTime dataInicial, LocalDateTime dataFinal){
+
+        
+    }
+
+
+    /****************************************************
+    * Deve receber um objeto do tipo Reserva e cancela  *
+    * esta reserva.                                     *
+    *****************************************************/
+    public void cancelaReserva(Reserva cancelada){
+
+    }
+
+
+    /******************************************************************
+    * Deve devolver uma Colletion de objetos Reserva que representam  *
+    * as reservas da respectiva sala.                                 *
+    *******************************************************************/
+    public Collection<Reserva> reservasParaSala(String nomeSala){
+
+    }
+
+
+    /********************************************************
+    * Deve receber uma String com o nome da sala e imprime  *
+    * todas as suas reservas.                               *
+    *********************************************************/
+    public void imprimeReservasDaSala(String nomeSala){
+
+    }
+
+}
