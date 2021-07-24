@@ -22,9 +22,15 @@ public class MarcadorDeReuniao {
     * Define os participantes da reunião. Recebe as datas e as listas dos participantes*
     ***********************************************************************************/
     public void marcarReuniaoEntre(LocalDate dataInicial, LocalDate dataFinal, Collection<String> listaDeParticipantes){
-        this.dataInicial = dataInicial;
-        this.dataFinal = dataFinal;
-        this.listaDeParticipantes = listaDeParticipantes;
+        
+        //1) Deixar mais especifico a Collection do parametro
+        //   - Criar algum identificador para cada participante, pois so com o nome
+        //     nao conseguimos identificar se ha duas pessoas diferentes com o mesmo nome
+        //     
+        //   - Identificador: ID? CPF?? E-mail???
+
+
+        //this.reuniao = new Reuniao(dataInicial, dataFinal, listaDeParticipantes);
     }
    
 
