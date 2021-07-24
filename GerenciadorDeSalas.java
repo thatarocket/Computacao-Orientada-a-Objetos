@@ -2,28 +2,47 @@ import java.time.LocalDateTime;
 import java.util.*;
 import java.io.IOException;
 
-// >>> Classe que o objetivo é reservar as salas para as nossas reuniões <<<
+// >>> Classe que reserva as salas para as nossas reuniões <<<
+
+/*============================================= OBSERVACOES ================================================
+    Um objeto da classe GerenciadorDeSalas deve receber um LOCAL. Logo, cada GerenciadorDeSalas gerencia
+    salas para apenas UM determinado local.
+
+    (podemos criar uma List de GerenciadorDeSalas no Main para o caso de haver reservas em locais distintos)
+============================================================================================================*/
 
 public class GerenciadorDeSalas {
     
     //atributos da classe
-    List<Sala> lista_salas = new LinkedList<>(); //lista de salas
-    List<Reserva> lista_reservas = new  LinkedList<>(); //lista de reservas marcadas
+    List<Sala> lista_salas; //lista de salas existentes
+    List<Reserva> lista_reservas; //lista de reservas realizadas
     String local; //local da reserva
 
     //construtor da classe
-    public GerenciadorDeSalas(List<Reserva> lista_reservas, String local){
+    public GerenciadorDeSalas(String local){
         
-        this.lista_reservas = lista_reservas;
         this.local = local;
+        this.lista_salas = new LinkedList<>();
+        this.lista_reservas = new  LinkedList<>();
     }
+
 
     /****************************************************
     * Deve receber o nome da sala, a capacidade máxima  *
     * da sala, e uma descrição.                         *
     *****************************************************/
     public void adicionaSalaChamada(String nome, int capacidadeMaxima, String descricao){
-        
+
+        try{
+            //verifica se a sala a ser adicionada ja existe, pois so adicionamos NOVAS sala
+            for(Sala sala : this.lista_salas){
+                if(sala.getNome().equals(nome)) throw new IOException();
+            }
+        }
+        catch(IOException e){
+            System.out.println("ERRO adicionaSalaChamada(): Esta sala ja existe.");
+        }
+
         Sala nova_sala = new Sala(nome, this.local, capacidadeMaxima, descricao);
         this.lista_salas.add(nova_sala);
     }
@@ -33,10 +52,21 @@ public class GerenciadorDeSalas {
     * Deve receber o nome da sala, a ser removida.      *
     *****************************************************/
     public void removeSalaChamada(String nomeDaSala){
-        
-        //remove da lista de Salas a sala com nome "nomeDaSala"
-        for(Sala sala : this.lista_salas){
-            if(sala.nome.equals(nomeDaSala)) this.lista_salas.remove(sala);
+
+        try{
+            boolean salaExiste = false;
+
+            //verifica se a sala a ser removida existe
+            for(Sala sala : this.lista_salas){
+                if(sala.getNome().equals(nomeDaSala)){
+                    salaExiste = true;
+                    this.lista_salas.remove(sala);
+                }
+            }
+            if(salaExiste == false) throw new IOException();
+        }
+        catch(IOException e){
+            System.out.println("ERRO removeSalaChamada(): Sala inexistente.");
         }
     }
 
@@ -71,12 +101,12 @@ public class GerenciadorDeSalas {
         try{
             boolean existe_sala = false;
             for(Sala sala : this.lista_salas){
-                if(sala.nome.equals(nomeDaSala)) existe_sala = true;
+                if(sala.getNome().equals(nomeDaSala)) existe_sala = true;
             }
-            if(!existe_sala) throw new IOException();
+            if(existe_sala == false) throw new IOException();
         }
         catch(IOException e){
-            System.out.println("ERRO: sala inexistente ou ja ocupada.");
+            System.out.println("ERRO reservaSalaChamada(): sala inexistente ou ja ocupada.");
         }
 
         Reserva nova_reserva = new Reserva(nomeDaSala, dataInicial, dataFinal);
@@ -92,7 +122,21 @@ public class GerenciadorDeSalas {
     *****************************************************/
     public void cancelaReserva(Reserva cancelada){
 
-        this.lista_reservas.remove(cancelada);
+        try{
+            boolean reservaExiste = false;
+
+            //verifica se a sala a ser removida existe
+            for(Reserva reserva : this.lista_reservas){
+                if(reserva.equals(cancelada)){
+                    reservaExiste = true;
+                    this.lista_reservas.remove(cancelada);
+                }
+            }
+            if(reservaExiste == false) throw new IOException();
+        }
+        catch(IOException e){
+            System.out.println("ERRO cancelaReserva(): Reserva inexistente.");
+        }
     }
 
 
@@ -105,22 +149,27 @@ public class GerenciadorDeSalas {
         Collection<Reserva> col_reservas = new LinkedList<>();
         
         for(Reserva reserva : this.lista_reservas){
-            if(reserva.nome.equals(nomeSala)) col_reservas.add(reserva);
+            if(reserva.getNome().equals(nomeSala)) col_reservas.add(reserva);
         }
 
         return col_reservas;
     }
 
 
-    /********************************************************
+   /*********************************************************
     * Deve receber uma String com o nome da sala e imprime  *
     * todas as suas reservas.                               *
     *********************************************************/
     public void imprimeReservasDaSala(String nomeSala){
 
+        boolean existeReserva = false;
         for(Reserva reserva : this.lista_reservas){
-            if(reserva.nome.equals(nomeSala)) System.out.println(reserva.toString());
+            if(reserva.getNome().equals(nomeSala)){
+                System.out.println(reserva.toString());
+                existeReserva = true;
+            }
         }
+        if(existeReserva == false) System.out.println("Não existem reservas para a sala " + nomeSala + ".");
     }
 
 }
