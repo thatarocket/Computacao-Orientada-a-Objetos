@@ -5,9 +5,9 @@ import java.time.LocalDateTime;
 public class Reserva{
 
     //atributos da classe
-    public String nome; //sala que vai ser reservada
-    public LocalDateTime start; //tempo do inicio da reserva
-    public LocalDateTime finish; //tempo do termino da reserva
+    private String nome; //sala que vai ser reservada
+    private LocalDateTime start; //tempo do inicio da reserva
+    private LocalDateTime finish; //tempo do termino da reserva
 
     //construtor da classe
     public Reserva(String nome, LocalDateTime start, LocalDateTime finish){
@@ -43,6 +43,10 @@ public class Reserva{
 
     public String toString(){
         return "Nome da reserva: " + this.nome + "  Inicio: " + this.start + "  Fim: " + this.finish;
+    }
+
+    public String getNome(){
+        return this.nome;
     }
 
 }
