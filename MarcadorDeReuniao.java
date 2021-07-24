@@ -39,9 +39,14 @@ public class MarcadorDeReuniao {
     * e a data inicial e final em que está com horário disponível(dia e horario)
     ********************************************************************************************/
     public void indicaDisponibilidade(String participante, LocalDateTime inicio, LocalDateTime fim) {
-        this.participante = participante;
-        this.inicio = inicio;
-        this.fim = fim;
+        
+        // 1. Verificar a existencia do Participante na Reuniao
+        // 2. Verificar se o horario "inicio" vem antes que o horario "fim"
+        // 3. Verificar se o horario de inicio e fim condizem com o horario que sera realizado a reuniao
+        
+        // this.participante = participante;
+        // this.inicio = inicio;
+        // this.fim = fim;
     }
 
     /***********************************************************************************************************
@@ -51,6 +56,18 @@ public class MarcadorDeReuniao {
         // ih rapaz
         //vou ver se acho algo que me ajude
 
+        //Formato do LocalDateTime:
+        //   ex: 2007-12-03T10:15:30 -> ano-mes-diaThora:minuto:segundo
+        
+        
+        // Verificar na sequencia: Ano -> Mes -> dia -> Hora -> Minuto
+
+        //metodos da biblioteca Time:
+        // isAfter() , isBefore()
+
+
+        //PRINT:
+        //  usar a biblioteca DateTimeFormatter e o metodo .ofPattern -> DateTimeFormatter.ofPattern("dd/MM/yyyy")
     }
    
 }
