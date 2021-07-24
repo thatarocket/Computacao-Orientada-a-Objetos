@@ -5,9 +5,9 @@ import java.time.format.DateTimeFormatter;
 public class Participante {
     
     //Atributos da classe
-    String nome;
-    LocalDateTime inicio; 
-    LocalDateTime fim; 
+    private String nome;
+    private LocalDateTime inicio; 
+    private LocalDateTime fim; 
 
     /* Construtor da classe */
     public Participante(LocalDateTime dataInicial, LocalDateTime dataFinal, String nome) {

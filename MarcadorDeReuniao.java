@@ -9,12 +9,17 @@ public class MarcadorDeReuniao {
     qual o melhor horário para se marcar uma reunião */
     
     //Atributos da classe
-    LocalDate dataInicial;
-    LocalData dataFinal;
-    LocalDateTime tempoInicial;
-    LocalDateTime tempoFinal;
-    Collection<String> listaDeParticipantes;
-    String participante;
+    private LocalDate dataInicial;
+    private LocalDate dataFinal;
+    private LocalDateTime tempoInicial;
+    private LocalDateTime tempoFinal;
+    private Collection<String> listaDeParticipantes;
+    private String participante;
+
+    //Construtor da classe
+    public MarcadorDeReuniao(){
+
+    }
 
     /**********************************************************************************
     * Define os participantes da reunião. Recebe as datas e as listas dos participantes*

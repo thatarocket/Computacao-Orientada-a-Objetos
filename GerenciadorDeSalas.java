@@ -14,9 +14,9 @@ import java.io.IOException;
 public class GerenciadorDeSalas {
     
     //atributos da classe
-    List<Sala> lista_salas; //lista de salas existentes
-    List<Reserva> lista_reservas; //lista de reservas realizadas
-    String local; //local da reserva
+    private List<Sala> lista_salas; //lista de salas existentes
+    private List<Reserva> lista_reservas; //lista de reservas realizadas
+    private String local; //local da reserva
 
     //construtor da classe
     public GerenciadorDeSalas(String local){
