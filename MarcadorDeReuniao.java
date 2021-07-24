@@ -16,10 +16,7 @@ public class MarcadorDeReuniao {
     private Collection<String> listaDeParticipantes;
     private String participante;
 
-    //Construtor da classe
-    public MarcadorDeReuniao(){
-
-    }
+    private Reuniao reuniao;
 
     /**********************************************************************************
     * Define os participantes da reunião. Recebe as datas e as listas dos participantes*
