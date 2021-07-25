@@ -13,7 +13,8 @@ public class Reuniao {
     private LocalDate inicioReuniao; //data que ira comecar a reuniao
     private LocalDate finalReuniao; //data que ira encerrar a reuniao
     private HashMap <String, String> dadosParticipantes; //recebe na primeira posicao o ID e em segundo o NOME do participante
-    
+    private List <Participante> agendaParticipantes; //lista de participantes
+
     //Construtor da classe
     public Reuniao(LocalDate inicioReuniao, LocalDate finalReuniao, HashMap<String,String> lista_participantes){
 
@@ -33,6 +34,11 @@ public class Reuniao {
     
     public void setFim(LocalDate fim) {
         this.finalReuniao = fim;
+    }
+
+    //Adiciona o "participante" na lista agentaParticipantes
+    public void setAgendaParticipantes(Participante participante){
+        this.agendaParticipantes.add(participante);
     }
     
     public HashMap<String, String> getParticipantes() {

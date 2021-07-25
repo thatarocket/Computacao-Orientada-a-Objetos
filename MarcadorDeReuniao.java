@@ -60,36 +60,22 @@ public class MarcadorDeReuniao {
             boolean participante_valido = false;
 
             for (Map.Entry<String,String> id : this.reuniao.getParticipantes().entrySet()) {
-                if(id.getKey().equals(separaDados[1])) participante_valido = true;
+                if(id.getKey().equals(separaDados[1])){
+                    participante_valido = true;
+                    this.reuniao.getParticipantes().put(separaDados[0], separaDados[1]);
+                    Participante obj_participante = new Participante(inicio, fim, separaDados[0], separaDados[1]);
+                    if(!inicio.isBefore(fim)) throw new DataException("ERRO indicaDisponibilidade: Datas incorretas para marcar reunião");
+                    else this.reuniao.setAgendaParticipantes(obj_participante);
+                }
             }
-            
             if(participante_valido == false) throw new ParticipanteException("ERRO indicaDisponibilidade(): Participante inexistente.");
-            if(!inicio.isBefore(fim)) throw new Exception();
         }
-        
-        catch(ParticipanteException ex){
-            System.err.println(ex.getMessage());
-        }
-
-        catch(Exception e){
-            System.out.println("ERRO indicaDisponibilidade: Datas incorretas para marcar reunião");
-        }
-
-        // Verifica se o horario de inicio e fim condizem com o horario que sera realizado a reuniao
-        try{
-
+        catch(ParticipanteException e){
+            System.err.println(e.getMessage());
         }
         catch(Exception e){
-            System.out.println("ERRO indicaDisponibilidade: Datas incorretas para marcar reunião");
+            System.err.println(e.getMessage());
         }
-
-
-        this.reuniao.getParticipantes().put(separaDados[0], separaDados[1]);
-
-        
-        // this.participante = participante;
-        // this.inicio = inicio;
-        // this.fim = fim;
     }
 
     /***********************************************************************************************************

@@ -7,10 +7,10 @@ public class Participante {
     private String nome;
     private LocalDateTime inicio; 
     private LocalDateTime fim; 
-    private int id;
+    private String id;
 
     /* Construtor da classe */
-    public Participante(LocalDateTime dataInicial, LocalDateTime dataFinal, String nome,int id) {
+    public Participante(LocalDateTime dataInicial, LocalDateTime dataFinal, String nome, String id) {
         this.nome = nome;
         this.inicio = dataInicial;
         this.fim = dataFinal; //pesquisar se pode isso
@@ -32,7 +32,7 @@ public class Participante {
         return this.nome;
     }
 
-    public int getID() {
+    public String getID() {
         return this.id;
     }
 
