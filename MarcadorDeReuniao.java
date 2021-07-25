@@ -3,8 +3,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-import org.graalvm.compiler.lir.stackslotalloc.LSStackSlotAllocator_OptionDescriptors;
-
 public class MarcadorDeReuniao {
     /* Classe que têm, como objetivo, marcar uma reunião. De forma que, se torne posssível 
     a organização dos horários de cada participante, possibilitando a visualização
@@ -18,31 +16,29 @@ public class MarcadorDeReuniao {
     * Define os participantes da reunião. Recebe as datas e as listas dos participantes*
     ***********************************************************************************/
     public void marcarReuniaoEntre(LocalDate dataInicial, LocalDate dataFinal, Collection<String> listaDeParticipantes){
-        
-        HashMap<String, String> dados_participantes = new HashMap<>();
-        boolean listaVazia = true;
-        boolean datasEmSequencia = false;
+      
+        try{
+            HashMap<String, String> dados_participantes = new HashMap<>();
+            boolean listaVazia = true;
+            boolean datasEmSequencia = false;
 
-        for(String participante : listaDeParticipantes){
-            String [] separaDados = participante.split("*");
-            dados_participantes.put(separaDados[0], separaDados[1]);
-        }
+            for(String participante : listaDeParticipantes){
+                String [] separaDados = participante.split("*");
+                dados_participantes.put(separaDados[0], separaDados[1]);
+            }
 
-
-        if(dados_participantes.size() == 0){
-            System.out.println("ERRO marcarReuniaoEntre: Lista de participantes vazia.");
+            if(dados_participantes.size() == 0) throw new ParticipanteException ("ERRO marcarReuniaoEntre: Lista de participantes vazia.");
+            else listaVazia = false;
+            if(!dataInicial.isBefore(dataFinal)) throw new DataException("ERRO marcarReuniaoEntre: Datas incorretas para marcar reunião");
+            else datasEmSequencia = true;
+            if(listaVazia == false && datasEmSequencia == true) this.reuniao = new Reuniao(dataInicial, dataFinal, dados_participantes);
         }
-        else listaVazia = false;
-        
-        if(!dataInicial.isBefore(dataFinal)) {
-            System.out.println("ERRO marcarReuniaoEntre: Datas incorretas para marcar reunião");
+        catch(ParticipanteException e){
+            System.err.println(e.getMessage());
         }
-        else datasEmSequencia = true;
-        
-        if(listaVazia == false && datasEmSequencia == true) {
-            this.reuniao = new Reuniao(dataInicial, dataFinal, lista_participantes);
+        catch(DataException e){
+            System.err.println(e.getMessage());
         }
-
     }
    
 
