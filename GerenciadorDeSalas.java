@@ -85,7 +85,6 @@ public class GerenciadorDeSalas {
     * Deve receber uma instancia de Sala        *
     *********************************************/
     public void adicionaSala(Sala novaSala){
-
         this.lista_salas.add(novaSala);
     }
 
