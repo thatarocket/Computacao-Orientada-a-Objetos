@@ -26,7 +26,7 @@ public class Main{
         MarcadorDeReuniao marcador = new MarcadorDeReuniao();
         LocalDate inicio_reuniao;
         LocalDate fim_reuniao;
-
+        GerenciadorDeSalas gerenciador;
         String comando = input.nextLine();
         help();
 
@@ -34,7 +34,17 @@ public class Main{
             switch(comando) {
                 // case "S": pensarEmComoUsar(); break;
                 // case "R": pensarEmComoUsar(); break;
-                // case "E": pensarEmComoUsar(); break;
+                case "E":
+                        System.out.print("Onde será o local da reuniao? ");
+                        String local = input.nextLine();
+                        gerenciador = new GerenciadorDeSalas(local);
+                        System.out.println("\nQual é o nome da sala a ser reservada? ");
+                        String nomeSala = input.nextLine();
+                        System.out.print("\nHorario que a sala será utilizada (dd/mm/yyyy - hh:mm:ss | dd/mm/yyyy - hh:mm:ss): ");
+
+                        gerenciador.adicionaReserva(gerenciador.reservaSalaChamada(nomeSala, dataInicial, dataFinal));
+                        break;
+
                 // case "C": pensarEmComoUsar(); break;
                 case "I": 
                             System.out.print(">>> Digite o nome do participante: ");

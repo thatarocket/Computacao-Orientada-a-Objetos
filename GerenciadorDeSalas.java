@@ -88,6 +88,10 @@ public class GerenciadorDeSalas {
         this.lista_salas.add(novaSala);
     }
 
+    public void adicionaReserva(Reserva novaReserva){
+        this.lista_reservas.add(novaReserva);
+    }
+
 
     /*************************************************************
     * Deve receber um nome de sala, um LocalDateTime que indica  *
@@ -105,7 +109,7 @@ public class GerenciadorDeSalas {
             if(existe_sala == false) throw new IOException();
         }
         catch(IOException e){
-            System.out.println("ERRO reservaSalaChamada(): sala inexistente ou ja ocupada.");
+            System.out.println("OPS! Esta sala nao inexiste ou ja se encontra ocupada.");
         }
 
         Reserva nova_reserva = new Reserva(nomeDaSala, dataInicial, dataFinal);
