@@ -36,7 +36,7 @@ public class Participante {
         return this.id;
     }
 
-    public void setID(int id) {
+    public void setID(String id) {
         this.id = id;
     }
 }
