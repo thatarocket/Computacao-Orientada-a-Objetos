@@ -19,16 +19,17 @@ public class MarcadorDeReuniao {
     ***********************************************************************************/
     public void marcarReuniaoEntre(LocalDate dataInicial, LocalDate dataFinal, Collection<String> listaDeParticipantes){
         
-        List<String> lista_participantes = new LinkedList<>();
+        HashMap<String, String> dados_participantes = new HashMap<>();
         boolean listaVazia = true;
         boolean datasEmSequencia = false;
 
-
         for(String participante : listaDeParticipantes){
-            lista_participantes.add(participante);
+            String [] separaDados = participante.split("*");
+            dados_participantes.put(separaDados[0], separaDados[1]);
         }
 
-        if(lista_participantes.size() == 0){
+
+        if(dados_participantes.size() == 0){
             System.out.println("ERRO marcarReuniaoEntre: Lista de participantes vazia.");
         }
         else listaVazia = false;
@@ -64,10 +65,10 @@ public class MarcadorDeReuniao {
             
             if(participante_valido == false) throw new ParticipanteException("ERRO indicaDisponibilidade(): Participante inexistente.");
             if(!inicio.isBefore(fim)) throw new Exception();
-
         }
-        catch(ExceParticipanteExceptiontion e){
-            System.err.println(e.getMessage());
+        
+        catch(ParticipanteException ex){
+            System.err.println(ex.getMessage());
         }
 
         catch(Exception e){

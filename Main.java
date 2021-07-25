@@ -9,6 +9,7 @@ public class Main{
         System.out.println("Reservar sala de reunião - Digite: E");
         System.out.println("Cancelar sala de reunião - Digite: C");
         System.out.println("Imprimir as reservas de sala existentes - Digite: I");
+        System.out.println("Criar participante - Digite: P");
         System.out.println("Marcar reuniao - Digite: M");
         System.out.println("Registrar disponibilidade - Digite: D");
         System.out.println("Mostrar sobreposicao de horários - Digite: O");
@@ -28,8 +29,9 @@ public class Main{
             case "I": pensarEmComoUsar(); break;
             case "M": pensarEmComoUsar(); break;
             case "O": pensarEmComoUsar(); break;
+            case "P": pensarEmComoUsar(); break;
             case "H": help(); break;
-            case "F": finalizar(); break; //COMO FAZ ISSO? KKKKKKKKK
+            case "F": return; 
             default:
                 System.out.println("ERRO: Insira um comando valido");
                 help();
