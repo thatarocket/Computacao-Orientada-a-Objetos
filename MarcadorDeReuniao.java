@@ -66,8 +66,8 @@ public class MarcadorDeReuniao {
             if(!inicio.isBefore(fim)) throw new Exception();
 
         }
-        catch(ExceParticipanteExceptiontion e){
-            System.err.println(e.getMessage());
+        catch(ExceParticipanteExceptiontion ex){
+            System.err.println(ex.getMessage());
         }
 
         catch(Exception e){
