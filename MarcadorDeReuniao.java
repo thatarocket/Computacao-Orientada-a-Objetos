@@ -18,20 +18,21 @@ public class MarcadorDeReuniao {
     public void marcarReuniaoEntre(LocalDate dataInicial, LocalDate dataFinal, Collection<String> listaDeParticipantes){
       
         try{
-            HashMap<String, String> dados_participantes = new HashMap<>();
-            boolean listaVazia = true;
-            boolean datasEmSequencia = false;
 
+            if(this.reuniao.getParticipantes().size() == 0) throw new ParticipanteException ("ERRO marcarReuniaoEntre: Lista de participantes vazia.");
+            if(!dataInicial.isBefore(dataFinal)) throw new DataException("ERRO marcarReuniaoEntre: Datas incorretas para marcar reunião");
+            this.reuniao.setInicio(dataInicial);
+            this.reuniao.setFim(dataFinal);
+
+            //checa se todos os participantes tem horario disponivel no horario da reuniao
             for(String participante : listaDeParticipantes){
                 String [] separaDados = participante.split("*");
-                dados_participantes.put(separaDados[0], separaDados[1]);
+                for(Participante p : this.reuniao.getAgendaParticipantes()){
+                    if(p.getNome().equals(participante)){
+                        if(p.getInicio().isBefore(dataInicial))
+                    }
+                }
             }
-
-            if(dados_participantes.size() == 0) throw new ParticipanteException ("ERRO marcarReuniaoEntre: Lista de participantes vazia.");
-            else listaVazia = false;
-            if(!dataInicial.isBefore(dataFinal)) throw new DataException("ERRO marcarReuniaoEntre: Datas incorretas para marcar reunião");
-            else datasEmSequencia = true;
-            if(listaVazia == false && datasEmSequencia == true) this.reuniao = new Reuniao(dataInicial, dataFinal, dados_participantes);
         }
         catch(ParticipanteException e){
             System.err.println(e.getMessage());
@@ -48,24 +49,32 @@ public class MarcadorDeReuniao {
     ********************************************************************************************/
     public void indicaDisponibilidade(String participante, LocalDateTime inicio, LocalDateTime fim) {
     //OBS: String participante recebe: nome+"*"+id
-
-        String [] separaDados = participante.split("*");
+        String [] separaDados = participante.split("\\*");
 
         // Verifica a existencia do Participante na Reuniao
         try{
-            boolean participante_valido = false;
-
-            for (Map.Entry<String,String> id : this.reuniao.getParticipantes().entrySet()) {
-                if(id.getKey().equals(separaDados[1])){
-                    participante_valido = true;
-                    this.reuniao.getParticipantes().put(separaDados[0], separaDados[1]);
-                    Participante obj_participante = new Participante(inicio, fim, separaDados[0], separaDados[1]);
-                    
-                    if(!inicio.isBefore(fim)) throw new DataException("ERRO indicaDisponibilidade: Datas incorretas para marcar reunião");
-                    else this.reuniao.setAgendaParticipantes(obj_participante);
-                }
+            if(this.reuniao == null){
+                this.reuniao = new Reuniao();
             }
-            if(participante_valido == false) throw new ParticipanteException("ERRO indicaDisponibilidade(): Participante inexistente.");
+
+            else{
+                boolean participante_valido = false;
+
+                for (Map.Entry<String,String> id : this.reuniao.getParticipantes().entrySet()) {
+                    if(id.getKey().equals(separaDados[1])){
+                        participante_valido = true;
+                    }
+                }
+                if(participante_valido == true) throw new ParticipanteException("ERRO indicaDisponibilidade(): Participante existente.");
+            }
+            
+            this.reuniao.getParticipantes().put(separaDados[0], separaDados[1]);
+            Participante obj_participante = new Participante(inicio, fim, separaDados[0], separaDados[1]);
+
+            if(!inicio.isBefore(fim)) throw new DataException("ERRO indicaDisponibilidade: Datas incorretas para marcar reunião");
+            else{
+                this.reuniao.setAgendaParticipantes(obj_participante);
+            }
         }
         catch(ParticipanteException e){
             System.err.println(e.getMessage());

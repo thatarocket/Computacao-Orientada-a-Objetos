@@ -11,16 +11,7 @@ public class Reuniao {
     private HashMap <String, String> dadosParticipantes; //recebe na primeira posicao o ID e em segundo o NOME do participante
     private List <Participante> agendaParticipantes; //lista de participantes
 
-    //Construtor da classe
-    public Reuniao(LocalDate inicioReuniao, LocalDate finalReuniao, HashMap<String,String> lista_participantes){
-
-        this.inicioReuniao = inicioReuniao;
-        this.finalReuniao = finalReuniao;
-        this.dadosParticipantes = lista_participantes;
-        
-    }
-
-    public void setParticipantes(HashMap<String, String>participantes){
+    public void setParticipantes(HashMap<String, String> participantes){
         this.dadosParticipantes = participantes;
     }
 
@@ -34,11 +25,18 @@ public class Reuniao {
 
     //Adiciona o "participante" na lista agentaParticipantes
     public void setAgendaParticipantes(Participante participante){
+        if(this.agendaParticipantes == null) this.agendaParticipantes = new LinkedList<>();
         this.agendaParticipantes.add(participante);
     }
     
     public HashMap<String, String> getParticipantes() {
+        if(this.dadosParticipantes == null) this.dadosParticipantes = new HashMap<>();
         return this.dadosParticipantes;
+    }
+
+    public List<Participante> getAgendaParticipantes() {
+        if(this.agendaParticipantes == null) this.agendaParticipantes = new LinkedList<>();
+        return this.agendaParticipantes;
     }
 
     public LocalDate getInicioReuniao() {

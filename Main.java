@@ -20,6 +20,21 @@ public class Main{
         System.out.println("========================================================================");
     }
 
+    public static LocalDate formata_data (String data){
+
+        String[]separa = data.split("/");
+        LocalDate data_formatada = LocalDate.of(Integer.parseInt(separa[2]), Integer.parseInt(separa[1]), Integer.parseInt(separa[0]));
+        return data_formatada;
+    }
+
+    public static LocalDateTime formata_tempo (String tempo, String data){
+        
+        String[]separa = tempo.split(":");
+        LocalTime time = LocalTime.of(Integer.parseInt(separa[0]), Integer.parseInt(separa[1]), Integer.parseInt(separa[2]));
+        LocalDateTime tempo_formatado = LocalDateTime.of(formata_data(data), time);
+        return tempo_formatado;
+    }
+
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         Collection <String> listaDeParticipantes = new LinkedList<>();
@@ -69,10 +84,9 @@ public class Main{
                                 System.out.print("\nHorario de termino da reuniao (dd/mm/yyyy): ");
                                 String fim = input.nextLine();
                                 System.out.println();
-                                String[]separa_inicio = inicio.split("/");
-                                String[]separa_fim = fim.split("/");
-                                inicio_reuniao = LocalDate.of(Integer.parseInt(separa_inicio[2]), Integer.parseInt(separa_inicio[1]), Integer.parseInt(separa_inicio[0]));
-                                fim_reuniao = LocalDate.of(Integer.parseInt(separa_fim[2]), Integer.parseInt(separa_fim[1]), Integer.parseInt(separa_fim[0]));
+
+                                inicio_reuniao = formata_data(inicio);
+                                fim_reuniao = formata_data(fim);
                                 
                                 //of(int year, int month, int dayOfMonth)
                                 marcador.marcarReuniaoEntre(inicio_reuniao, fim_reuniao, listaDeParticipantes);
@@ -85,16 +99,20 @@ public class Main{
                         System.out.println("=-=-=-=-=-=-=- COLETANDO DADOS DO PARTICIPANTE -=-=-=-=-=-=-=-=");
                         System.out.print("NOME DO PARTICIPANTE: ");
                         String nome = input.nextLine();
-                        System.out.println("\nCRIE UM ID DE 6 NÚMEROS: ");
+                        System.out.print("\nCRIE UM ID DE 6 NÚMEROS: ");
                         String id = input.nextLine();
-                        System.out.print("\nHORARIO DE DISPONIBILIDADE\n OBS: utilize o formato < dd/mm/yyyy - hh:mm:ss | dd/mm/yyyy - hh:mm:ss > : ");
+                        System.out.print("\nHORARIO DE DISPONIBILIDADE -> OBS: utilize o formato\n< dd/mm/yyyy - hh:mm:ss | dd/mm/yyyy - hh:mm:ss >\n");
+                        System.out.print("Horario: ");
                         String horario = input.nextLine();
+                        System.out.println("\n=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
+
+                        String data1 = horario.substring(0, 9);
+                        String tempo1 = horario.substring(13, 20);
+                        String data2 = horario.substring(24, 33);
+                        String tempo2 = horario.substring(37, 44);
                         
-                        LocalDate data_inicio = LocalDate.of(year, month, dayOfMonth)
-                        LocalTime tempo_inicio;
-                        LocalDateTime inicio = LocalDateTime.of(data_inicio, tempo_inicio);
                         String nome_id = nome + "*" + id;
-                        //marcador.indicaDisponibilidade(nome_id, inicio, fim);
+                        marcador.indicaDisponibilidade(nome_id, formata_tempo(tempo1, data1), formata_tempo(tempo2, data2));
                         break;
                 
                 // case "H": help(); break;
