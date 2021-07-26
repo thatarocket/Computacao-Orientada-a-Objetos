@@ -60,6 +60,7 @@ public class MarcadorDeReuniao {
                     participante_valido = true;
                     this.reuniao.getParticipantes().put(separaDados[0], separaDados[1]);
                     Participante obj_participante = new Participante(inicio, fim, separaDados[0], separaDados[1]);
+                    
                     if(!inicio.isBefore(fim)) throw new DataException("ERRO indicaDisponibilidade: Datas incorretas para marcar reunião");
                     else this.reuniao.setAgendaParticipantes(obj_participante);
                 }
@@ -78,7 +79,8 @@ public class MarcadorDeReuniao {
     Mostra quais horários foram escolhidos pelos funcionários e destaca os que mais de uma pessoa está disponível.
     ************************************************************************************************************ */
     public void mostraSobreposicao() {
-    
+        
+
         //Formato do LocalDateTime:
         //   ex: 2007-1203T10:15:30 -> ano-mes-diaThora:minuto:segundo
         

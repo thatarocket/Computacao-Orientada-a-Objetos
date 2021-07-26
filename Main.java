@@ -1,23 +1,23 @@
 import java.util.*;
 import java.time.LocalDate;
+import java.time.*;
 
 
 public class Main{
 
     public static void help(){
-        System.out.println("============== Escolha o comando desejado ================");
-        System.out.println("> Adicionar sala de reunião - Digite: S");
-        System.out.println("> Remover sala de reunião - Digite: R");
-        System.out.println("> Reservar sala de reunião - Digite: E");
-        System.out.println("> Cancelar sala de reunião - Digite: C");
-        System.out.println("> Imprimir as reservas de sala existentes - Digite: I");
-        System.out.println("> Adicionar um participante na reuniao - Digite: P");
-        System.out.println("> Marcar reuniao - Digite: M");
-        System.out.println("> Registrar disponibilidade - Digite: D");
-        System.out.println("> Mostrar sobreposicao de horários - Digite: O");
-        System.out.println("> Ver os comandos disponiveis novamente - Digite: H");
-        System.out.println("> Finalizar o programa: F");
-        System.out.println("===========================================================");
+        System.out.println("========================= ESCOLHA UM COMANDO =========================");
+        System.out.println(">> Adicionar sala de reunião -------------------------- <COMANDO>: S");
+        System.out.println("<< Remover sala de reunião ---------------------------- <COMANDO>: R");
+        System.out.println(">> Reservar sala de reunião --------------------------- <COMANDO>: E");
+        System.out.println("<< Cancelar sala de reunião --------------------------- <COMANDO>: C");
+        System.out.println(">> Imprimir as reservas das salas --------------------- <COMANDO>: I");
+        System.out.println("<< Adicionar um participante na reuniao --------------- <COMANDO>: P");
+        System.out.println(">> Marcar uma reuniao --------------------------------- <COMANDO>: M");
+        System.out.println(">> Mostrar sobreposicao de horários ------------------- <COMANDO>: O");
+        System.out.println("<< Ver os comandos disponiveis novamente -------------- <COMANDO>: H");
+        System.out.println(">> Finalizar o programa ------------------------------- <COMANDO>: F");
+        System.out.println("========================================================================");
     }
 
     public static void main(String[] args) {
@@ -27,10 +27,14 @@ public class Main{
         LocalDate inicio_reuniao;
         LocalDate fim_reuniao;
         GerenciadorDeSalas gerenciador;
-        String comando = input.nextLine();
-        help();
+        String comando = "";
+        
 
         while(!comando.equals("F")){
+            help();
+            System.out.print("<INSIRA UM COMANDO> : ");
+            comando = input.nextLine();
+            System.out.println();
             switch(comando) {
                 // case "S": pensarEmComoUsar(); break;
                 // case "R": pensarEmComoUsar(); break;
@@ -42,7 +46,7 @@ public class Main{
                         String nomeSala = input.nextLine();
                         System.out.print("\nHorario que a sala será utilizada (dd/mm/yyyy - hh:mm:ss | dd/mm/yyyy - hh:mm:ss): ");
 
-                        gerenciador.adicionaReserva(gerenciador.reservaSalaChamada(nomeSala, dataInicial, dataFinal));
+                        //gerenciador.adicionaReserva(gerenciador.reservaSalaChamada(nomeSala, dataInicial, dataFinal));
                         break;
 
                 // case "C": pensarEmComoUsar(); break;
@@ -53,35 +57,56 @@ public class Main{
                             
                             // marcador.indicaDisponibilidade(participante, inicio, fim);
                             break;
+                
                 case "M":
-                            System.out.println("======== ESCOLHA UM HORARIO PARA A REUNIAO ========");
-                            marcador.mostraSobreposicao();
-                            System.out.println("===================================================");
-                            System.out.print("Horario de inicio da reuniao (dd/mm/yyyy): ");
-                            String inicio = input.nextLine();
-                            System.out.print("\nHorario de termino da reuniao (dd/mm/yyyy): ");
-                            String fim = input.nextLine();
-                            System.out.println();
-                            String[]separa_inicio = inicio.split("/");
-                            String[]separa_fim = inicio.split("/");
-                            inicio_reuniao = LocalDate.of(Integer.parseInt(separa_inicio[2]), Integer.parseInt(separa_inicio[1]), Integer.parseInt(separa_inicio[0]));
-                            fim_reuniao = LocalDate.of(Integer.parseInt(separa_fim[2]), Integer.parseInt(separa_fim[1]), Integer.parseInt(separa_fim[0]));
-                            //of(int year, int month, int dayOfMonth)
-                            marcador.marcarReuniaoEntre(inicio_reuniao, fim_reuniao, listaDeParticipantes);
+                            if(listaDeParticipantes.size() == 0) System.out.println("OPS! Não existe participantes na reunião para mostrar a sobreposição de horários.\n");
+                            else{
+                                System.out.println("======== ESCOLHA UM HORARIO PARA A REUNIAO ========");
+                                marcador.mostraSobreposicao();
+                                System.out.println("===================================================");
+                                System.out.print("Horario de inicio da reuniao (dd/mm/yyyy): ");
+                                String inicio = input.nextLine();
+                                System.out.print("\nHorario de termino da reuniao (dd/mm/yyyy): ");
+                                String fim = input.nextLine();
+                                System.out.println();
+                                String[]separa_inicio = inicio.split("/");
+                                String[]separa_fim = fim.split("/");
+                                inicio_reuniao = LocalDate.of(Integer.parseInt(separa_inicio[2]), Integer.parseInt(separa_inicio[1]), Integer.parseInt(separa_inicio[0]));
+                                fim_reuniao = LocalDate.of(Integer.parseInt(separa_fim[2]), Integer.parseInt(separa_fim[1]), Integer.parseInt(separa_fim[0]));
+                                
+                                //of(int year, int month, int dayOfMonth)
+                                marcador.marcarReuniaoEntre(inicio_reuniao, fim_reuniao, listaDeParticipantes);
+                            }
                             break;
+
                 // case "O": pensarEmComoUsar(); break;
-                // case "P": pensarEmComoUsar(); break;
+                
+                case "P":
+                        System.out.println("=-=-=-=-=-=-=- COLETANDO DADOS DO PARTICIPANTE -=-=-=-=-=-=-=-=");
+                        System.out.print("NOME DO PARTICIPANTE: ");
+                        String nome = input.nextLine();
+                        System.out.println("\nCRIE UM ID DE 6 NÚMEROS: ");
+                        String id = input.nextLine();
+                        System.out.print("\nHORARIO DE DISPONIBILIDADE\n OBS: utilize o formato < dd/mm/yyyy - hh:mm:ss | dd/mm/yyyy - hh:mm:ss > : ");
+                        String horario = input.nextLine();
+                        
+                        LocalDate data_inicio = LocalDate.of(year, month, dayOfMonth)
+                        LocalTime tempo_inicio;
+                        LocalDateTime inicio = LocalDateTime.of(data_inicio, tempo_inicio);
+                        String nome_id = nome + "*" + id;
+                        //marcador.indicaDisponibilidade(nome_id, inicio, fim);
+                        break;
+                
                 // case "H": help(); break;
-        
+                case "F": break;
+
                 default:
                     System.out.println("ERRO: O comando inserido é invalido. Por favor, digite um comando válido.");
                     help();
-                    System.out.print("Comando: ");
+                    System.out.print("<REINSIRA UM COMANDO> : ");
                     comando = input.nextLine();
                     System.out.println();
                     break;
-                
-                comando = input.nextLine();
             }
         }
 
