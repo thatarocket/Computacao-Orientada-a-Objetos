@@ -20,6 +20,7 @@ public class Main{
         System.out.println("========================================================================");
     }
 
+    //transforma a String DATA ("dd/mm/aaaa") em LocalDate
     public static LocalDate formata_data (String data){
 
         String[]separa = data.split("/");
@@ -27,6 +28,7 @@ public class Main{
         return data_formatada;
     }
 
+    //transforma a String tempo ("hh:mm:ss") e data ("dd/mm/aaaa") em LocalDateTime
     public static LocalDateTime formata_tempo (String tempo, String data){
         
         String[]separa = tempo.split(":");
@@ -53,42 +55,46 @@ public class Main{
             switch(comando) {
                 // case "S": pensarEmComoUsar(); break;
                 // case "R": pensarEmComoUsar(); break;
-                case "E":
-                        System.out.print("Onde será o local da reuniao? ");
+
+                case "E": //RESERVA UMA SALA DE REUNIAO e ADICIONA A RESERVA NA LISTA DE RESERVAS
+                        System.out.println("=-=-=-=-=-=-=-=-=-= RESERVANDO UMA SALA DE REUNIÃO =-=-=-=-=-=-=-=-=-=");
+                        System.out.print("1. Onde será o local da reuniao? ");
                         String local = input.nextLine();
                         gerenciador = new GerenciadorDeSalas(local);
-                        System.out.println("\nQual é o nome da sala a ser reservada? ");
+                        System.out.println("\n2. Qual é o nome da sala a ser reservada? ");
                         String nomeSala = input.nextLine();
-                        System.out.print("\nHorario que a sala será utilizada (dd/mm/yyyy - hh:mm:ss | dd/mm/yyyy - hh:mm:ss): ");
+                        System.out.print("\n3. Horario que a sala será utilizada (dd/mm/yyyy - hh:mm:ss | dd/mm/yyyy - hh:mm:ss): ");
+                        String horario_reserva = input.nextLine();
+                        System.out.println();
 
-                        //gerenciador.adicionaReserva(gerenciador.reservaSalaChamada(nomeSala, dataInicial, dataFinal));
+                        String data1 = horario_reserva.substring(0, 9);
+                        String tempo1 = horario_reserva.substring(13, 20);
+                        String data2 = horario_reserva.substring(24, 33);
+                        String tempo2 = horario_reserva.substring(37, 44);
+
+                        gerenciador.adicionaReserva(gerenciador.reservaSalaChamada(nomeSala,  formata_tempo(tempo1, data1), formata_tempo(tempo2, data2)));
                         break;
 
                 // case "C": pensarEmComoUsar(); break;
                 case "I": 
-                            System.out.print(">>> Digite o nome do participante: ");
-                            String nome_participante = input.nextLine();
-                            System.out.print("\n>>> Horario INICIAL de disponibilidade (dd/mm/yyyy - hh:mm:ss): ");
-                            
-                            // marcador.indicaDisponibilidade(participante, inicio, fim);
+                            //OBS: precisa criar um metodo pra IMPRIMIR AS RESERVAS na classe MarcadorDeReuniao
                             break;
                 
-                case "M":
+                case "M": //MARCAR UMA REUNIAO
                             if(listaDeParticipantes.size() == 0) System.out.println("OPS! Não existe participantes na reunião para mostrar a sobreposição de horários.\n");
                             else{
                                 System.out.println("======== ESCOLHA UM HORARIO PARA A REUNIAO ========");
                                 marcador.mostraSobreposicao();
                                 System.out.println("===================================================");
-                                System.out.print("Horario de inicio da reuniao (dd/mm/yyyy): ");
+                                System.out.print("1. Horario de inicio da reuniao (dd/mm/yyyy): ");
                                 String inicio = input.nextLine();
-                                System.out.print("\nHorario de termino da reuniao (dd/mm/yyyy): ");
+                                System.out.print("\n2. Horario de termino da reuniao (dd/mm/yyyy): ");
                                 String fim = input.nextLine();
                                 System.out.println();
 
                                 inicio_reuniao = formata_data(inicio);
                                 fim_reuniao = formata_data(fim);
                                 
-                                //of(int year, int month, int dayOfMonth)
                                 marcador.marcarReuniaoEntre(inicio_reuniao, fim_reuniao, listaDeParticipantes);
                             }
                             break;
@@ -97,11 +103,11 @@ public class Main{
                 
                 case "P":
                         System.out.println("=-=-=-=-=-=-=- COLETANDO DADOS DO PARTICIPANTE -=-=-=-=-=-=-=-=");
-                        System.out.print("NOME DO PARTICIPANTE: ");
+                        System.out.print("1. NOME DO PARTICIPANTE: ");
                         String nome = input.nextLine();
-                        System.out.print("\nCRIE UM ID DE 6 NÚMEROS: ");
+                        System.out.print("\n2. CRIE UM ID DE 6 NÚMEROS: ");
                         String id = input.nextLine();
-                        System.out.print("\nHORARIO DE DISPONIBILIDADE -> OBS: utilize o formato\n< dd/mm/yyyy - hh:mm:ss | dd/mm/yyyy - hh:mm:ss >\n");
+                        System.out.print("\n3. HORARIO DE DISPONIBILIDADE -> OBS: utilize o formato\n< dd/mm/yyyy - hh:mm:ss | dd/mm/yyyy - hh:mm:ss >\n");
                         System.out.print("Horario: ");
                         String horario = input.nextLine();
                         System.out.println("\n=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
