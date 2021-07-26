@@ -12,15 +12,16 @@ public class MarcadorDeReuniao {
     private Reuniao reuniao;
 
     
-    /**********************************************************************************
+   /************************************************************************************
     * Define os participantes da reunião. Recebe as datas e as listas dos participantes*
-    ***********************************************************************************/
+    *                                                                                  *
+    * -> Adiciona as datas de inicio e fim que a reuniao será realizada.               *
+    ************************************************************************************/
     public void marcarReuniaoEntre(LocalDate dataInicial, LocalDate dataFinal, Collection<String> listaDeParticipantes){
       
         try{
-
-            if(this.reuniao.getParticipantes().size() == 0) throw new ParticipanteException ("ERRO marcarReuniaoEntre: Lista de participantes vazia.");
-            if(!dataInicial.isBefore(dataFinal)) throw new DataException("ERRO marcarReuniaoEntre: Datas incorretas para marcar reunião");
+            if(this.reuniao.getParticipantes().size() == 0) throw new ParticipanteException ("OPS! Você quer marcar uma reunião sem participantes.");
+            if(!dataInicial.isBefore(dataFinal)) throw new DataException("OPS! A data de inicio e fim da reunião nao esta em ordem cronologica.");
             this.reuniao.setInicio(dataInicial);
             this.reuniao.setFim(dataFinal);
 
@@ -28,8 +29,8 @@ public class MarcadorDeReuniao {
             for(String participante : listaDeParticipantes){
                 String [] separaDados = participante.split("*");
                 for(Participante p : this.reuniao.getAgendaParticipantes()){
-                    if(p.getNome().equals(participante)){
-                        if(p.getInicio().isBefore(dataInicial))
+                    if(p.getNome().equals(separaDados[0]) && this.reuniao.getParticipantes().containsKey(separaDados[1])){
+                        if(!p.getInicio().toLocalDate().isBefore(dataInicial)) throw new DataException("OPS! O participante " + p.getNome() + " com ID = " + p.getID() +" não possuí disponibilidade para estar na reunião.");
                     }
                 }
             }
@@ -43,9 +44,11 @@ public class MarcadorDeReuniao {
     }
    
 
-    /*******************************************************************************************
+   /*********************************************************************************************
     * Define a disponibilidade de cada pessoa para a reunião. Recebe uma String do participante *
-    * e a data inicial e final em que está com horário disponível(dia e horario)
+    * e a data inicial e final em que está com horário disponível(dia e horario)                *
+    *                                                                                           *
+    *-> Adiciona um Participante na reuniao.                                                    *
     ********************************************************************************************/
     public void indicaDisponibilidade(String participante, LocalDateTime inicio, LocalDateTime fim) {
     //OBS: String participante recebe: nome+"*"+id
@@ -58,14 +61,11 @@ public class MarcadorDeReuniao {
             }
 
             else{
-                boolean participante_valido = false;
-
+                
+                //verifica se esse participante ja foi adicionado na reuniao
                 for (Map.Entry<String,String> id : this.reuniao.getParticipantes().entrySet()) {
-                    if(id.getKey().equals(separaDados[1])){
-                        participante_valido = true;
-                    }
+                    if(id.getKey().equals(separaDados[1])) throw new ParticipanteException("OPS! O participante " + id.getValue() + " com ID = "+ id.getKey() + " ja foi adicionado na reuniao.");
                 }
-                if(participante_valido == true) throw new ParticipanteException("ERRO indicaDisponibilidade(): Participante existente.");
             }
             
             this.reuniao.getParticipantes().put(separaDados[0], separaDados[1]);
