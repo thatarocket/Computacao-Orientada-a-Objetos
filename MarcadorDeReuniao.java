@@ -57,6 +57,7 @@ public class MarcadorDeReuniao {
         // Verifica a existencia do Participante na Reuniao
         try{
             if(this.reuniao == null){
+                System.out.println("REUNIAO EH NULL, INICIALIZA");
                 this.reuniao = new Reuniao();
             }
 
@@ -68,11 +69,12 @@ public class MarcadorDeReuniao {
                 }
             }
             
-            this.reuniao.getParticipantes().put(separaDados[0], separaDados[1]);
+            this.reuniao.getParticipantes().put(separaDados[1], separaDados[0]);
             Participante obj_participante = new Participante(inicio, fim, separaDados[0], separaDados[1]);
 
-            if(!inicio.isBefore(fim)) throw new DataException("ERRO indicaDisponibilidade: Datas incorretas para marcar reunião");
-            else{
+            if(inicio.isBefore(fim) == false) throw new DataException("ERRO indicaDisponibilidade: Datas incorretas para marcar reunião");
+            
+                else{
                 this.reuniao.setAgendaParticipantes(obj_participante);
             }
         }
@@ -88,23 +90,37 @@ public class MarcadorDeReuniao {
     Mostra quais horários foram escolhidos pelos funcionários e destaca os que mais de uma pessoa está disponível.
     ************************************************************************************************************ */
     public void mostraSobreposicao() {
-        
 
-        //Formato do LocalDateTime:
-        //   ex: 2007-1203T10:15:30 -> ano-mes-diaThora:minuto:segundo
-        
-        //
-        //
-        // Verificar na sequencia: Ano -> Mes -> dia -> Hora -> Minuto
-        
-        
-        
-        //metodos da biblioteca Time:
-        // isAfter() , isBefore()
+        HashMap<String, LocalDateTime> inicio = new HashMap<>(); // horarios iniciais de todos os participantes
+        HashMap<String, LocalDateTime> fim = new HashMap<>(); // horarios finais de todos os participantes
 
+        //inicializa os hashs
+        for(Participante participante : this.reuniao.getAgendaParticipantes()){
+            inicio.put(participante.getID(), LocalDateTime.of(participante.getInicio().getYear(), participante.getInicio().getMonthValue(), participante.getInicio().getDayOfMonth(), participante.getInicio().getHour(), participante.getInicio().getMinute()));
+            fim.put(participante.getID(), LocalDateTime.of(participante.getFim().getYear(), participante.getFim().getMonth(), participante.getFim().getDayOfMonth(), participante.getFim().getHour(), participante.getFim().getMinute()));
+        }
+        
+        LocalDateTime start = inicio.get(this.reuniao.getAgendaParticipantes().get(0).getID());
+        LocalDateTime finish = fim.get(this.reuniao.getAgendaParticipantes().get(0).getID());
 
-        //PRINT:
-        //  usar a biblioteca DateTimeFormatter e o metodo .ofPattern -> DateTimeFormatter.ofPattern("dd/MM/yyyy")
+        for(Participante participante : this.reuniao.getAgendaParticipantes()){ //ANO
+            System.out.println(participante.getInicio());
+            if(participante.getInicio().getYear() > start.getYear()) start = participante.getInicio();
+            if(participante.getFim().getYear() < finish.getYear()) finish = participante.getFim();
+        }
+        
+        for(Participante participante : this.reuniao.getAgendaParticipantes()){ //TEMPO
+            if(participante.getInicio().getHour() < start.getHour()) start = LocalDateTime.of(start.getYear(), start.getMonth(), start.getDayOfMonth(), participante.getInicio().getHour(), start.getMinute());
+            if(participante.getFim().getHour() > finish.getHour()) finish = LocalDateTime.of(finish.getYear(), finish.getMonth(), finish.getDayOfMonth(), participante.getFim().getHour(), finish.getMinute());
+        }
+                   
+        System.out.println("========== AS SOBREPOSIÇÕES EXISTENTES SÃO: =========");
+
+        System.out.println("DATA INICIO: " + start);
+        System.out.println("DATA FIM: " + finish);
+        
+        System.out.println("====================================================");
+       
     }
    
 }

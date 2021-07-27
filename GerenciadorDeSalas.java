@@ -34,7 +34,7 @@ public class GerenciadorDeSalas {
     public void adicionaSalaChamada(String nome, int capacidadeMaxima, String descricao){
 
         try{
-            //verifica se a sala a ser adicionada ja existe, pois so adicionamos NOVAS sala
+            //verifica se a sala a ser adicionada ja existe, pois so adicionamos NOVAS salas
             for(Sala sala : this.lista_salas){
                 if(sala.getNome().equals(nome)) throw new IOException();
             }
@@ -44,7 +44,7 @@ public class GerenciadorDeSalas {
         }
 
         Sala nova_sala = new Sala(nome, this.local, capacidadeMaxima, descricao);
-        this.lista_salas.add(nova_sala);
+        adicionaSala(nova_sala);
     }
 
 
@@ -64,6 +64,14 @@ public class GerenciadorDeSalas {
                 }
             }
             if(salaExiste == false) throw new IOException();
+            else System.out.println("A sala " + nomeDaSala + " no local " + this.local + " foi removida");
+            
+            for(Reserva reserva : this.lista_reservas){
+                if(reserva.getNome().equals(nomeDaSala)){
+                    System.out.println("A reserva da data " + reserva.getInicio() + "ate" + reserva.getFim() + " no local " + this.local + " foi cancelada"); 
+                    this.lista_reservas.remove(reserva);
+                }
+            }
         }
         catch(IOException e){
             System.out.println("ERRO removeSalaChamada(): Sala inexistente.");
@@ -173,6 +181,10 @@ public class GerenciadorDeSalas {
             }
         }
         if(existeReserva == false) System.out.println("Não existem reservas para a sala " + nomeSala + ".");
+    }
+
+    public List<Reserva> getListaReservas(){
+        return this.lista_reservas;
     }
 
 }

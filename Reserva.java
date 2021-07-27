@@ -49,4 +49,12 @@ public class Reserva{
         return this.nome;
     }
 
+    public LocalDateTime getInicio(){
+        return this.start;
+    }
+
+    public LocalDateTime getFim(){
+        return this.finish;
+    }
+
 }

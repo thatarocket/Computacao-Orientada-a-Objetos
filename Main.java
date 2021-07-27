@@ -10,7 +10,7 @@ public class Main{
         System.out.println(">> Cria uma sala de reunião --------------------------- <COMANDO>: S");
         System.out.println("<< Remover uma sala de reunião ------------------------ <COMANDO>: R");
         System.out.println(">> Reservar uma sala de reunião ----------------------- <COMANDO>: E");
-        System.out.println("<< Cancelar sala de reunião --------------------------- <COMANDO>: C");
+        System.out.println("<< Cancelar uma reunião ------------------------------- <COMANDO>: C");
         System.out.println(">> Imprimir as reservas das salas --------------------- <COMANDO>: I");
         System.out.println("<< Adicionar um participante na reuniao --------------- <COMANDO>: P");
         System.out.println(">> Marcar uma reuniao --------------------------------- <COMANDO>: M");
@@ -44,7 +44,13 @@ public class Main{
         MarcadorDeReuniao marcador = new MarcadorDeReuniao();
         LocalDate inicio_reuniao;
         LocalDate fim_reuniao;
-        GerenciadorDeSalas gerenciador;
+
+
+        System.out.print("Onde serão realizadas as reuniões? ");
+        String local = input.nextLine();
+        System.out.println();
+
+        GerenciadorDeSalas gerenciador = new GerenciadorDeSalas(local);
         String comando = "";
         
 
@@ -53,21 +59,38 @@ public class Main{
             System.out.print("<INSIRA UM COMANDO> : ");
             comando = input.nextLine();
             System.out.println();
-            
+
+            //COLOCAR VERIFICACOES EM CADA METODO, CASO PRECISE VERIFICAR SE JA FOI CRIADO SALAS/PARTICIPANTES/REUNIOES
             switch(comando) {
                 case "S": //CRIA UMA SALA DE REUNIAO e ADICIONA NA LISTA DE SALAS QUE PODEM SER RESERVADAS
-                        
+                        System.out.println("=-=-=-=-=-=-=--=--=- CRIANDO UMA SALA DE REUNIÃO -=-=-=-=-=-=-=--=--=");
+                        System.out.print("1. Qual será o nome da sala? ");
+                        String nome_sala = input.nextLine();
+                        System.out.print("\n2. Qual é a capacidade máxima de pessoas nessa sala? ");
+                        int maxPessoas = input.nextInt();
+                        input.nextLine();
+                        System.out.print("\n3. Escreve uma breve descrição da sala em apenas uma linha: ");
+                        String descricao = input.nextLine();
+                        System.out.println();
+                        gerenciador.adicionaSalaChamada(nome_sala, maxPessoas, descricao);
+                        System.out.println("\n=-=-=-=-=-=-=--=--=-=-=-=-=-=-=-=--=--=-=-=-=-=-=-=-=--=--=-=-=-=-=-=-=");
+
                         break;
-                // case "R": pensarEmComoUsar(); break;
+                        
+                case "R": //REMOVE UMA SALA DE REUNIÃO EXISTENTE
+                        System.out.println("=-=-=-=-=-=-=-=-=-= REMOVENDO UMA SALA DE REUNIÃO =-=-=-=-=-=-=-=-=-=");
+                        System.out.println("1. Digite o nome da sala que será removida");
+                        String nomeSala = input.nextLine();
+                        gerenciador.removeSalaChamada(nomeSala);     
+                        // verificar se o construtor ja foi iniciado
+                        System.out.println("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
+                        break;                  
 
                 case "E": //RESERVA UMA SALA DE REUNIAO e ADICIONA A RESERVA NA LISTA DE RESERVAS
                         System.out.println("=-=-=-=-=-=-=-=-=-= RESERVANDO UMA SALA DE REUNIÃO =-=-=-=-=-=-=-=-=-=");
-                        System.out.print("1. Onde será o local da reuniao? ");
-                        String local = input.nextLine();
-                        gerenciador = new GerenciadorDeSalas(local);
-                        System.out.println("\n2. Qual é o nome da sala a ser reservada? ");
-                        String nomeSala = input.nextLine();
-                        System.out.print("\n3. Horario que a sala será utilizada (dd/mm/yyyy - hh:mm:ss | dd/mm/yyyy - hh:mm:ss): ");
+                        System.out.println("\n1. Qual é o nome da sala a ser reservada? ");
+                        String nome_Sala = input.nextLine();
+                        System.out.print("\n2. Horario que a sala será utilizada (dd/mm/yyyy - hh:mm:ss | dd/mm/yyyy - hh:mm:ss): ");
                         String horario_reserva = input.nextLine();
                         System.out.println();
 
@@ -76,14 +99,26 @@ public class Main{
                         String data_2 = horario_reserva.substring(24, 33);
                         String tempo_2 = horario_reserva.substring(37, 44);
 
-                        gerenciador.adicionaReserva(gerenciador.reservaSalaChamada(nomeSala,  formata_tempo(tempo_1, data_1), formata_tempo(tempo_2, data_2)));
+                        gerenciador.adicionaReserva(gerenciador.reservaSalaChamada(nome_Sala,  formata_tempo(tempo_1, data_1), formata_tempo(tempo_2, data_2)));
                         System.out.println("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
                         break;
 
-                // case "C": pensarEmComoUsar(); break;
-                case "I": 
-                            //OBS: precisa criar um metodo pra IMPRIMIR AS RESERVAS na classe MarcadorDeReuniao
-                            break;
+                case "C": // CANCELA UMA REUNIÃO, ANTERIORMENTE MARCADA
+                        //lembrar de garantir que nao tem salas de nomes iguais
+                        System.out.println("=-=-=-=-=-=-=-=-=-= CANCELANDO UMA REUNIÃO MARCADA =-=-=-=-=-=-=-=-=-=");
+                        System.out.println("1. Digite o nome da reunião que será cancelada ");
+                        String nomeDaSala = input.nextLine();
+                        for(Reserva reserva : gerenciador.getListaReservas()){
+                            if(reserva.getNome().equals(nomeDaSala)) gerenciador.cancelaReserva(reserva);
+                        }
+                        break;
+                        
+                case "I": //IMPRIMIR AS RESERVAS DAS SALAS 
+                        for(Reserva reserva : gerenciador.getListaReservas()){
+                            gerenciador.imprimeReservasDaSala(reserva.getNome()); 
+                        }
+                                    
+                        break;
                 
                 case "M": //MOSTRA A SOBREPOSIÇÃO DE HORARIOS E MARCA UMA REUNIAO A PARTIR DELA
                             if(listaDeParticipantes.size() == 0) System.out.println("OPS! Não existe participantes na reunião para mostrar a sobreposição de horários.\n");
@@ -104,7 +139,11 @@ public class Main{
                             }
                             break;
 
-                // case "O": pensarEmComoUsar(); break;
+                case "O":
+                        System.out.println("======== SOBREPOSIÇÕES DOS HORÁRIOS DE REUNIÃO ========");
+                        marcador.mostraSobreposicao();
+                        System.out.println("=======================================================");
+                        break;
                 
                 case "P": //ADICIONA UM PARTICIPANTE NA REUNIAO
                         System.out.println("=-=-=-=-=-=-=- COLETANDO DADOS DO PARTICIPANTE -=-=-=-=-=-=-=-=");
@@ -117,16 +156,15 @@ public class Main{
                         String horario = input.nextLine();
                         System.out.println("\n=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
 
-                        String data1 = horario.substring(0, 9);
+                        String data1 = horario.substring(0, 10);
                         String tempo1 = horario.substring(13, 20);
-                        String data2 = horario.substring(24, 33);
+                        String data2 = horario.substring(24, 34);
                         String tempo2 = horario.substring(37, 44);
                         
                         String nome_id = nome + "*" + id;
                         marcador.indicaDisponibilidade(nome_id, formata_tempo(tempo1, data1), formata_tempo(tempo2, data2));
                         break;
                 
-                // case "H": help(); break;
                 case "F": break;
 
                 default:
@@ -138,9 +176,5 @@ public class Main{
                     break;
             }
         }
-
-
-        //   - Identificador: ID? -> 6 numeros. Verificar se tem repetido, ou 000000, ou negativo
-
     }
 }
