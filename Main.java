@@ -7,15 +7,16 @@ public class Main{
 
     public static void help(){
         System.out.println("========================= ESCOLHA UM COMANDO =========================");
-        System.out.println(">> Adicionar sala de reunião -------------------------- <COMANDO>: S");
-        System.out.println("<< Remover sala de reunião ---------------------------- <COMANDO>: R");
-        System.out.println(">> Reservar sala de reunião --------------------------- <COMANDO>: E");
+        System.out.println(">> Cria uma sala de reunião --------------------------- <COMANDO>: S");
+        System.out.println("<< Remover uma sala de reunião ------------------------ <COMANDO>: R");
+        System.out.println(">> Reservar uma sala de reunião ----------------------- <COMANDO>: E");
         System.out.println("<< Cancelar sala de reunião --------------------------- <COMANDO>: C");
         System.out.println(">> Imprimir as reservas das salas --------------------- <COMANDO>: I");
         System.out.println("<< Adicionar um participante na reuniao --------------- <COMANDO>: P");
         System.out.println(">> Marcar uma reuniao --------------------------------- <COMANDO>: M");
         System.out.println(">> Mostrar sobreposicao de horários ------------------- <COMANDO>: O");
-        System.out.println("<< Ver os comandos disponiveis novamente -------------- <COMANDO>: H");
+        //Mostrar essa mensagem depois de cada comando nos cases:
+        //System.out.println("<< Gostaria de rever os comandos disponiveis novamente? -------------- <COMANDO>: H");
         System.out.println(">> Finalizar o programa ------------------------------- <COMANDO>: F");
         System.out.println("========================================================================");
     }
@@ -52,8 +53,11 @@ public class Main{
             System.out.print("<INSIRA UM COMANDO> : ");
             comando = input.nextLine();
             System.out.println();
+            
             switch(comando) {
-                // case "S": pensarEmComoUsar(); break;
+                case "S": //CRIA UMA SALA DE REUNIAO e ADICIONA NA LISTA DE SALAS QUE PODEM SER RESERVADAS
+                        
+                        break;
                 // case "R": pensarEmComoUsar(); break;
 
                 case "E": //RESERVA UMA SALA DE REUNIAO e ADICIONA A RESERVA NA LISTA DE RESERVAS
@@ -67,12 +71,13 @@ public class Main{
                         String horario_reserva = input.nextLine();
                         System.out.println();
 
-                        String data1 = horario_reserva.substring(0, 9);
-                        String tempo1 = horario_reserva.substring(13, 20);
-                        String data2 = horario_reserva.substring(24, 33);
-                        String tempo2 = horario_reserva.substring(37, 44);
+                        String data_1 = horario_reserva.substring(0, 9);
+                        String tempo_1 = horario_reserva.substring(13, 20);
+                        String data_2 = horario_reserva.substring(24, 33);
+                        String tempo_2 = horario_reserva.substring(37, 44);
 
-                        gerenciador.adicionaReserva(gerenciador.reservaSalaChamada(nomeSala,  formata_tempo(tempo1, data1), formata_tempo(tempo2, data2)));
+                        gerenciador.adicionaReserva(gerenciador.reservaSalaChamada(nomeSala,  formata_tempo(tempo_1, data_1), formata_tempo(tempo_2, data_2)));
+                        System.out.println("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
                         break;
 
                 // case "C": pensarEmComoUsar(); break;
@@ -80,7 +85,7 @@ public class Main{
                             //OBS: precisa criar um metodo pra IMPRIMIR AS RESERVAS na classe MarcadorDeReuniao
                             break;
                 
-                case "M": //MARCAR UMA REUNIAO
+                case "M": //MOSTRA A SOBREPOSIÇÃO DE HORARIOS E MARCA UMA REUNIAO A PARTIR DELA
                             if(listaDeParticipantes.size() == 0) System.out.println("OPS! Não existe participantes na reunião para mostrar a sobreposição de horários.\n");
                             else{
                                 System.out.println("======== ESCOLHA UM HORARIO PARA A REUNIAO ========");
@@ -101,7 +106,7 @@ public class Main{
 
                 // case "O": pensarEmComoUsar(); break;
                 
-                case "P":
+                case "P": //ADICIONA UM PARTICIPANTE NA REUNIAO
                         System.out.println("=-=-=-=-=-=-=- COLETANDO DADOS DO PARTICIPANTE -=-=-=-=-=-=-=-=");
                         System.out.print("1. NOME DO PARTICIPANTE: ");
                         String nome = input.nextLine();
