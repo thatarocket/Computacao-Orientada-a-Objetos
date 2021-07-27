@@ -145,7 +145,7 @@ public class Main{
                         System.out.println(ANSI_CYAN + "=-=-=-=-=-=-=-=-=-= RESERVANDO UMA SALA DE REUNIAO =-=-=-=-=-=-=-=-=-=" + ANSI_RESET);
                         System.out.print(ANSI_CYAN + "\n1. Qual eh o nome da sala a ser reservada? " + ANSI_RESET);
                         String nome_Sala = input.nextLine();
-                        System.out.print(ANSI_CYAN + "\n2. Qual sera o horario que a sala sera utilizada?\nPor favor, utilize o seguinte formato < dd/mm/yyyy - hh:mm:ss | dd/mm/yyyy - hh:mm:ss > : \n" + ANSI_RESET);
+                        System.out.print(ANSI_CYAN + "\n2. Qual sera o horario que a sala sera utilizada?\nPor favor, utilize o seguinte formato < "+ANSI_YELLOW + "dd/mm/yyyy - hh:mm:ss | dd/mm/yyyy - hh:mm:ss"+ ANSI_CYAN +" > : \n" + ANSI_RESET);
                         
                         boolean entradaCorreta = false;
                         String data_1 = "";
@@ -186,16 +186,55 @@ public class Main{
 
                 case "C": // CANCELA UMA REUNIÃO, ANTERIORMENTE MARCADA
                         //lembrar de garantir que nao tem salas de nomes iguais
-                        System.out.println("=-=-=-=-=-=-=-=-=-= CANCELANDO UMA REUNIAO MARCADA =-=-=-=-=-=-=-=-=-=");
-                        System.out.println("1. Digite o nome da reuniao que sera cancelada ");
+                        System.out.println(ANSI_CYAN + "=-=-=-=-=-=-=-=-=-= CANCELANDO UMA REUNIAO MARCADA =-=-=-=-=-=-=-=-=-=" + ANSI_RESET);
+                        System.out.print(ANSI_CYAN + "  1. Qual eh o nome da sala que a reuniao iria ser realizada? " + ANSI_RESET);
                         String nomeDaSala = input.nextLine();
+                        System.out.println(ANSI_CYAN + "\n  2. Para qual horario estava marcado a reuniao?" + ANSI_RESET);
+                        System.out.println(ANSI_CYAN + "Por favor, utilize o seguinte formato < "+ ANSI_YELLOW +"dd/mm/yyyy - hh:mm:ss | dd/mm/yyyy - hh:mm:ss" + ANSI_CYAN + " > :"+ANSI_RESET);
+                        System.out.println();
+
+                        boolean entrada_Correta = false;
+                        String data01 = "";
+                        String tempo01 = "";
+                        String data02 = "";
+                        String tempo02 = "";
+
+                        while(entrada_Correta == false){
+                            try{
+                                String horarioMarcado = input.nextLine();
+                                data01 = horarioMarcado.substring(0, 9);
+                                tempo01 = horarioMarcado.substring(13, 20);
+                                data02 = horarioMarcado.substring(24, 33);
+                                tempo02 = horarioMarcado.substring(37, 44);
+                                entrada_Correta = true;
+                                System.out.println();
+                            }
+                            catch (IndexOutOfBoundsException e){
+                                System.out.println(ANSI_RED + "  OPS! O horario digitado não está com o formato padrao pedido." + ANSI_RESET);
+                                System.out.println(ANSI_BLUE + "  >>> Insira novamente o horário da reuniao:   " + ANSI_RESET);
+                            }
+                        }
+
+                        boolean existe = false;
+                        //checa se exitia uma reuniao marcado no horario informado
                         for(Reserva reserva : gerenciador.getListaReservas()){
-                            if(reserva.getNome().equals(nomeDaSala)) gerenciador.cancelaReserva(reserva);
+                            if(reserva.getNome().equals(nomeDaSala)){
+                                if(reserva.getFim().isEqual(formata_tempo(tempo01, data01)) && reserva.getFim().isEqual(formata_tempo(tempo02, data02))){
+                                    existe = true;
+                                    gerenciador.cancelaReserva(reserva);
+                                }
+                            }
+                        }
+                        if(existe == true) System.out.println(ANSI_CYAN + "=-=-=-=-=-=-=-=-=-="+ ANSI_GREEN + "REUNIAO CANCELADA COM SUCESSO" + ANSI_CYAN+" =-=-=-=-=-=-=-=-=-=" + ANSI_RESET);
+
+                        else{
+                            System.out.println(ANSI_RED+" OPS! Parece que nao ha nenhuma reuniao marcada para este horario na sala "+ ANSI_RESET+nomeDaSala +ANSI_RED+". Logo, \nnao eh possivel cancelar essa reuniao."+ ANSI_RESET);
+                            System.out.println(ANSI_CYAN + "=-=-=-=-=-=-=-=-=-="+ ANSI_RED + " NAO FOI POSSIVEL CANCELAR A REUNIAO" + ANSI_CYAN+" =-=-=-=-=-=-=-=-=-=" + ANSI_RESET);
                         }
 
                         if(help2() == 1) help();
                         break;
-                        
+/////////////////////////////////////////////////////////////// 
                 case "I": //IMPRIMIR AS RESERVAS DAS SALAS 
                         for(Reserva reserva : gerenciador.getListaReservas()){
                             gerenciador.imprimeReservasDaSala(reserva.getNome()); 
