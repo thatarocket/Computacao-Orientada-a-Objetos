@@ -53,16 +53,14 @@ public class MarcadorDeReuniao {
     public void indicaDisponibilidade(String participante, LocalDateTime inicio, LocalDateTime fim) {
     //OBS: String participante recebe: nome+"*"+id
         String [] separaDados = participante.split("\\*");
-
+        
         // Verifica a existencia do Participante na Reuniao
         try{
             if(this.reuniao == null){
-                System.out.println("REUNIAO EH NULL, INICIALIZA");
                 this.reuniao = new Reuniao();
             }
 
             else{
-                
                 //verifica se esse participante ja foi adicionado na reuniao
                 for (Map.Entry<String,String> id : this.reuniao.getParticipantes().entrySet()) {
                     if(id.getKey().equals(separaDados[1])) throw new ParticipanteException("OPS! O participante " + id.getValue() + " com ID = "+ id.getKey() + " ja foi adicionado na reuniao.");
