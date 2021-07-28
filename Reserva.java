@@ -1,7 +1,6 @@
 
 import java.time.LocalDateTime;
 
-
 public class Reserva{
 
     //atributos da classe
@@ -25,20 +24,6 @@ public class Reserva{
         Sala nova_sala = new Sala(nome, local, capacidade, observacoes);
     
         return nova_sala;
-    }
-
-    /****************************************
-    * Retorna o tempo do inicio da reserva *
-    ****************************************/
-    public LocalDateTime inicio(){
-        return this.start;
-    }
-
-    /****************************************
-    * Retorna o tempo do termino da reserva *
-    *****************************************/
-    public LocalDateTime fim(){
-        return this.finish;
     }
 
     public String toString(){
