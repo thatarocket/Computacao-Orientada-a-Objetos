@@ -23,7 +23,7 @@ public class Main{
 
     public static int help2(){
         Scanner sc = new Scanner(System.in);
-        System.out.println( "<<< Gostaria de rever a tabela de"  + " COMANDOS"  +" ??? Digite" + " 1 " +"ou " +"2 "+">>>" );
+        System.out.println( "<<< Gostaria de rever a tabela de"  + " COMANDOS"  +"? Digite" + " 1 " +"ou " +"2 "+">>>" );
         System.out.println("   " + "SIM " + ": " +"1" +"    NAO " +":"+" 2");
         System.out.print( "   >>> " );
         int resp = 0;
