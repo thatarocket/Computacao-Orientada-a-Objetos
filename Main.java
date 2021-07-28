@@ -7,14 +7,12 @@ import java.io.*;
 public class Main{
 
     public static final String ANSI_RESET = "\u001B[0m";
-    public static final String ANSI_BLACK = "\u001B[30m";
     public static final String ANSI_RED = "\u001B[31m";
     public static final String ANSI_GREEN = "\u001B[32m";
     public static final String ANSI_YELLOW = "\u001B[33m";
     public static final String ANSI_BLUE = "\u001B[34m";
     public static final String ANSI_PURPLE = "\u001B[35m";
     public static final String ANSI_CYAN = "\u001B[36m";
-    public static final String ANSI_WHITE = "\u001B[37m";
 
     public static void help(){
         System.out.println(ANSI_PURPLE + "======================== ESCOLHA UM COMANDO ========================" + ANSI_RESET);
@@ -33,22 +31,22 @@ public class Main{
     public static int help2(){
         Scanner sc = new Scanner(System.in);
         System.out.println(ANSI_CYAN + "<<< Gostaria de rever a tabela de" + ANSI_YELLOW + " COMANDOS" + ANSI_CYAN +" ??? Digite"+ ANSI_YELLOW + " 1 "+ ANSI_CYAN +"ou "+ ANSI_YELLOW +"2 "+ANSI_CYAN+">>>" + ANSI_RESET);
-        System.out.println(ANSI_CYAN + "        "+ ANSI_GREEN + "SIM "+ANSI_CYAN + ": "+ANSI_YELLOW +"1"+ANSI_RED +"    NAO "+ ANSI_CYAN +":"+ANSI_YELLOW+" 2"+ ANSI_RESET);
-        System.out.print(ANSI_CYAN + "        >>> " + ANSI_RESET);
+        System.out.println(ANSI_CYAN + "   "+ ANSI_GREEN + "SIM "+ANSI_CYAN + ": "+ANSI_YELLOW +"1"+ANSI_RED +"    NAO "+ ANSI_CYAN +":"+ANSI_YELLOW+" 2"+ ANSI_RESET);
+        System.out.print(ANSI_CYAN + "   >>> " + ANSI_RESET);
         int resp = 0;
         while(resp != 1 || resp != 2){
             try{
                 resp = sc.nextInt();
                 sc.nextLine();
                 if(resp != 1 && resp != 2){
-                    System.out.println(ANSI_RED + "OPS! Este comando nao eh valido." + ANSI_RESET);
+                    System.out.println(ANSI_RED + "OPS! Este comando " + ANSI_PURPLE  + "nao eh valido" + ANSI_RED +"." + ANSI_RESET);
                     System.out.print(ANSI_BLUE + ">>> Digite novamente: " + ANSI_RESET);
                 }
                 else break;
             }
             catch(InputMismatchException e){
                 sc.nextLine();
-                System.out.println(ANSI_RED + "OPS! Este comando nao eh valido." + ANSI_RESET);
+                System.out.println(ANSI_RED + "OPS! Este comando " + ANSI_PURPLE  + "nao eh valido" + ANSI_RED +"." + ANSI_RESET);
                 System.out.print(ANSI_BLUE + ">>>Digite novamente: " + ANSI_RESET);
             }
         }
@@ -111,7 +109,7 @@ public class Main{
                             }
                             catch(InputMismatchException e){
                                 input.nextLine();
-                                System.out.print(ANSI_RED + "\n  OPS! A capacidade maxima de pessoas digitada não eh um numero inteiro positivo.\n" + ANSI_BLUE + "   >>>> Digite outro valor: " + ANSI_RESET);
+                                System.out.print(ANSI_RED + "\n  OPS! A capacidade maxima de pessoas digitada não eh um " + ANSI_PURPLE + "numero inteiro positivo" + ANSI_RED + ".\n" + ANSI_BLUE + "   >>>> Digite outro valor: " + ANSI_RESET);
                             }
                         }
                         input.nextLine();
@@ -209,7 +207,7 @@ public class Main{
                                 System.out.println();
                             }
                             catch (IndexOutOfBoundsException e){
-                                System.out.println(ANSI_RED + "  OPS! O horario digitado não está com o formato padrao pedido." + ANSI_RESET);
+                                System.out.println(ANSI_RED + "  OPS! O horario digitado não está com o " + ANSI_PURPLE + "formato padrao" + ANSI_RED+" pedido." + ANSI_RESET);
                                 System.out.println(ANSI_BLUE + "  >>> Insira novamente o horário da reuniao:   " + ANSI_RESET);
                             }
                         }
@@ -247,14 +245,14 @@ public class Main{
                         break;
                 
                 case "M": //MOSTRA A SOBREPOSIÇÃO DE HORARIOS E MARCA UMA REUNIAO A PARTIR DELA
-                        if(listaDeParticipantes.size() == 0) System.out.println("OPS! Nao existe participantes na reuniao para mostrar a sobreposicao de horarios.\n");
+                        System.out.println(ANSI_CYAN + "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= MARCANDO UMA REUNIAO =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=" + ANSI_RESET);
+                        if(listaDeParticipantes.size() == 0) System.out.println(ANSI_RED + "  OPS! Nao existe participantes na reuniao para mostrar a sobreposicao de horarios.\n" + ANSI_RESET);
                         else{
-                            System.out.println(ANSI_YELLOW+ "======== ESCOLHA UM HORARIO PARA A REUNIAO DADO OS HORARIOS DISPONIVEIS ========" + ANSI_RESET);
+                            System.out.println(ANSI_YELLOW+ " >>>> INTERVALO DE HORARIO EM QUE TODOS OS PARTICIPANTES TEM DISPONIBILIDADE <<<<" + ANSI_RESET);
                             marcador.mostraSobreposicao();
-                            System.out.println(ANSI_YELLOW + "===============================================================================" + ANSI_RESET);
-                            System.out.print(ANSI_CYAN + "1. Horario de inicio da reuniao < " +ANSI_YELLOW+"dd/mm/yyyy" + ANSI_CYAN + " >: "+ANSI_RESET);
+                            System.out.print(ANSI_CYAN + "  1. Horario de inicio da reuniao < " +ANSI_YELLOW+"dd/mm/yyyy" + ANSI_CYAN + " >: "+ANSI_RESET);
                             String inicio = input.nextLine();
-                            System.out.print(ANSI_CYAN + "\n2. Horario de termino da reuniao < " + ANSI_YELLOW +"dd/mm/yyyy" + ANSI_CYAN +" >: " + ANSI_RESET);
+                            System.out.print(ANSI_CYAN + "\n  2. Horario de termino da reuniao < " + ANSI_YELLOW +"dd/mm/yyyy" + ANSI_CYAN +" >: " + ANSI_RESET);
                             String fim = input.nextLine();
                             System.out.println();
 
@@ -263,28 +261,52 @@ public class Main{
                             
                             marcador.marcarReuniaoEntre(inicio_reuniao, fim_reuniao, listaDeParticipantes);
                         }
-
+                        System.out.println(ANSI_CYAN + "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= " + ANSI_GREEN + "REUNIAO MARCADA COM SUCESSO" + ANSI_CYAN +" =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n" + ANSI_RESET);
                         if(help2() == 1) help();
                         break;
 
                 case "O":
-                        System.out.println("======== SOBREPOSICOES DOS HORÁRIOS DE REUNIAO ========");
+                        System.out.println(ANSI_CYAN + "=-=-=-=-=-=-=- SOBREPOSICAO DOS HORARIOS DE REUNIAO -=-=-=-=-=-=-=-=" + ANSI_RESET);
                         marcador.mostraSobreposicao();
-                        System.out.println("=======================================================");
+                        System.out.println(ANSI_CYAN + "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n" + ANSI_RESET);
                         
                         if(help2() == 1) help();
                         break;
                 
                 case "P": //ADICIONA UM PARTICIPANTE NA REUNIAO
-                        System.out.println("=-=-=-=-=-=-=- COLETANDO DADOS DO PARTICIPANTE -=-=-=-=-=-=-=-=");
-                        System.out.print("1. NOME DO PARTICIPANTE: ");
+                        System.out.println(ANSI_CYAN + "=-=-=-=-=-=-=- COLETANDO DADOS DO PARTICIPANTE -=-=-=-=-=-=-=-=" + ANSI_RESET);
+                        System.out.print(ANSI_CYAN + "  1. Nome do participante: " + ANSI_RESET);
                         String nome = input.nextLine();
-                        System.out.print("\n2. CRIE UM ID DE 6 NUMEROS: ");
-                        String id = input.nextLine();
-                        System.out.print("\n3. HORARIO DE DISPONIBILIDADE -> OBS: utilize o formato\n< dd/mm/yyyy - hh:mm:ss | dd/mm/yyyy - hh:mm:ss >\n");
-                        System.out.print("Horario: ");
+                        System.out.print(ANSI_CYAN + "\n  2. Crie um ID de 6 numeros: " + ANSI_RESET);
+                        boolean ehNum = false;
+                        String id = "";
+                        while(ehNum == false){
+                            try{
+                                id = input.nextLine();
+                                String [] separa = id.split("");
+                                for(String s : separa){
+                                    int n = Integer.parseInt(s);
+                                }
+                                for(String participante : listaDeParticipantes){
+                                    String[]sep = participante.split("\\*");
+                                    if(sep[1].equals(id)) throw new ParticipanteException(ANSI_RED + "  OPS! Esse ID " + ANSI_PURPLE + "ja existe"+ ANSI_RED +". Por favor, insira outro ID: " + ANSI_RESET);
+                                }
+                                if(separa.length != 6) throw new ParticipanteException(ANSI_RED + "  OPS! Esse ID " + ANSI_PURPLE + "nao possui 6 numeros" + ANSI_RED + ". Por favor, insira outro ID: " + ANSI_RESET);
+                                ehNum = true;
+                            }
+                            catch(NumberFormatException e){
+                                System.out.println(ANSI_RED + "  OPS! Esse ID " + ANSI_PURPLE + "não possuí apenas números inteiros" + ANSI_RED + ". Por favor, insira outro ID: " + ANSI_RESET);
+                                System.out.print(ANSI_CYAN + "  >>>  " + ANSI_RESET);
+                            }
+                            catch(ParticipanteException e){
+                                System.err.println(e.getMessage());
+                                System.out.print(ANSI_CYAN + "  >>>  " + ANSI_RESET);
+                            }
+                        }
+
+                        System.out.print(ANSI_CYAN + "\n  3. Horario de disponibilidade\nPor favor, utilize o formato < "+ ANSI_YELLOW + "dd/mm/yyyy - hh:mm:ss | dd/mm/yyyy - hh:mm:ss" + ANSI_YELLOW + " > :\n" + ANSI_RESET);
                         String horario = input.nextLine();
-                        System.out.println("\n=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
+                        System.out.println(ANSI_CYAN + "\n=-=-=-=-=-=-=-=-=-= " + ANSI_GREEN + "DADOS COLETADOS COM SUCESSO" + ANSI_CYAN + " =-=-=-=-=-=-=-=-=-=\n" + ANSI_RESET);
 
                         String data1 = horario.substring(0, 10);
                         String tempo1 = horario.substring(13, 20);
@@ -292,6 +314,7 @@ public class Main{
                         String tempo2 = horario.substring(37, 44);
                         
                         String nome_id = nome + "*" + id;
+                        listaDeParticipantes.add(nome_id);
                         marcador.indicaDisponibilidade(nome_id, formata_tempo(tempo1, data1), formata_tempo(tempo2, data2));
                         
                         if(help2() == 1) help();
@@ -300,7 +323,7 @@ public class Main{
                 case "F": break;
 
                 default:
-                    System.out.println("ERRO: O comando inserido eh invalido. Por favor, digite um comando valido.");
+                    System.out.println(ANSI_RED + "  OPS! O comando inserido " + ANSI_PURPLE + "eh invalido" + ANSI_RED+ ". Por favor, digite um comando valido." + ANSI_RESET);
                     System.out.print(ANSI_YELLOW + "<REINSIRA UM COMANDO> : " + ANSI_RESET);
                     comando = input.nextLine();
                     System.out.println();
