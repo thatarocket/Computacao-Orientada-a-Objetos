@@ -10,16 +10,6 @@ public class MarcadorDeReuniao {
     
     //Atributos da classe
     private Reuniao reuniao;
-
-    public static final String ANSI_RESET = "\u001B[0m";
-    public static final String ANSI_BLACK = "\u001B[30m";
-    public static final String ANSI_RED = "\u001B[31m";
-    public static final String ANSI_GREEN = "\u001B[32m";
-    public static final String ANSI_YELLOW = "\u001B[33m";
-    public static final String ANSI_BLUE = "\u001B[34m";
-    public static final String ANSI_PURPLE = "\u001B[35m";
-    public static final String ANSI_CYAN = "\u001B[36m";
-    public static final String ANSI_WHITE = "\u001B[37m";
     
    /************************************************************************************
     * Define os participantes da reunião. Recebe as datas e as listas dos participantes*
@@ -28,15 +18,15 @@ public class MarcadorDeReuniao {
     ************************************************************************************/
     public void marcarReuniaoEntre(LocalDate dataInicial, LocalDate dataFinal, Collection<String> listaDeParticipantes) throws DataException, ParticipanteException{
       
-        if(this.reuniao.getParticipantes().size() == 0) throw new ParticipanteException (ANSI_RED + "  OPS! Você quer marcar uma reunião sem participantes.\n" + ANSI_RESET);
-        if(!dataInicial.isBefore(dataFinal)) throw new DataException(ANSI_RED + "  OPS! A data de inicio e fim da reunião nao esta em ordem cronologica.\n" + ANSI_RESET);
+        if(this.reuniao.getParticipantes().size() == 0) throw new ParticipanteException ("  OPS! Você quer marcar uma reunião sem participantes.\n");
+        if(!dataInicial.isBefore(dataFinal)) throw new DataException("  OPS! A data de inicio e fim da reunião nao esta em ordem cronologica.\n");
 
         //checa se todos os participantes tem horario disponivel no horario da reuniao
         for(String participante : listaDeParticipantes){
             String [] separaDados = participante.split("\\*");
             for(Participante p : this.reuniao.getAgendaParticipantes()){
                 if(p.getNome().equals(separaDados[0]) && this.reuniao.getParticipantes().containsKey(separaDados[1])){
-                    if(p.getInicio().toLocalDate().isAfter(dataFinal) || (p.getFim().toLocalDate().isBefore(dataInicial))) throw new DataException(ANSI_RED + "  OPS! " + ANSI_PURPLE + p.getNome() + ANSI_RED +" com ID = " + ANSI_PURPLE + p.getID() + ANSI_RED +" não possuí disponibilidade para estar na reunião." + ANSI_RESET);
+                    if(p.getInicio().toLocalDate().isAfter(dataFinal) || (p.getFim().toLocalDate().isBefore(dataInicial))) throw new DataException("  OPS! " + p.getNome() + " com ID = " + p.getID() + " não possuí disponibilidade para estar na reunião." );
                 }
             }
         }
@@ -111,20 +101,20 @@ public class MarcadorDeReuniao {
             if(participante.getFim().getHour() > finish.getHour()) finish = LocalDateTime.of(finish.getYear(), finish.getMonth(), finish.getDayOfMonth(), participante.getFim().getHour(), finish.getMinute());
         }
                    
-        System.out.println(ANSI_BLUE + "============================================================" + ANSI_RESET);
+        System.out.println("============================================================");
 
-        System.out.println(ANSI_BLUE + "INICIO DA DISPONIBILIDADE: " + ANSI_YELLOW +  start.getDayOfMonth() + "/" + start.getMonthValue() + "/" + start.getYear() + " as " + start.getHour() + "h" + start.getMinute() + "min" + ANSI_RESET);
-        System.out.println(ANSI_BLUE + "FIM DA DISPONIBILIDADE: " + ANSI_YELLOW + finish.getDayOfMonth() + "/" + finish.getMonthValue() + "/" + finish.getYear() + " as " + finish.getHour() + "h" + finish.getMinute() + "min" + ANSI_RESET);
+        System.out.println( "INICIO DA DISPONIBILIDADE: " +  start.getDayOfMonth() + "/" + start.getMonthValue() + "/" + start.getYear() + " as " + start.getHour() + "h" + start.getMinute() + "min" );
+        System.out.println( "FIM DA DISPONIBILIDADE: " +  finish.getDayOfMonth() + "/" + finish.getMonthValue() + "/" + finish.getYear() + " as " + finish.getHour() + "h" + finish.getMinute() + "min");
         
-        System.out.println(ANSI_BLUE + "============================================================" + ANSI_RESET);
+        System.out.println( "============================================================");
        
         //Verifica se todos os participantes podem estar presente no horario determinado
         for(Participante participante : this.reuniao.getAgendaParticipantes()){ //TEMPO
             if(participante.getInicio().isBefore(start) && (participante.getFim().isBefore(finish) || participante.getFim().isEqual(finish))){
-                System.out.println(ANSI_YELLOW + "  ATENÇÃO: " + ANSI_PURPLE + participante.getNome() + ANSI_YELLOW + " com ID " + ANSI_PURPLE + participante.getID() + ANSI_YELLOW + " nao possui disponibilidade no mesmo horario que os outros participantes." + ANSI_RESET);
+                System.out.println("  ATENÇÃO: " + participante.getNome() +  " com ID "  + participante.getID()  + " nao possui disponibilidade no mesmo horario que os outros participantes.");
             }
             else if(participante.getInicio().isAfter(finish) && (participante.getFim().isAfter(finish) || participante.getInicio().isEqual(finish))){
-                System.out.println(ANSI_YELLOW + "  ATENÇÃO: " + ANSI_PURPLE + participante.getNome() + ANSI_YELLOW + " com ID " + ANSI_PURPLE + participante.getID() + ANSI_YELLOW + " nao possui disponibilidade no mesmo horario que os outros participantes." + ANSI_RESET);
+                System.out.println( "  ATENÇÃO: "  + participante.getNome()  + " com ID "  + participante.getID()  + " nao possui disponibilidade no mesmo horario que os outros participantes." );
             }
         }
     }

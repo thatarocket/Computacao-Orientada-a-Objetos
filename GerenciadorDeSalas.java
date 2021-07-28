@@ -13,16 +13,6 @@ import java.io.*;
 
 public class GerenciadorDeSalas {
 
-    public static final String ANSI_RESET = "\u001B[0m";
-    public static final String ANSI_BLACK = "\u001B[30m";
-    public static final String ANSI_RED = "\u001B[31m";
-    public static final String ANSI_GREEN = "\u001B[32m";
-    public static final String ANSI_YELLOW = "\u001B[33m";
-    public static final String ANSI_BLUE = "\u001B[34m";
-    public static final String ANSI_PURPLE = "\u001B[35m";
-    public static final String ANSI_CYAN = "\u001B[36m";
-    public static final String ANSI_WHITE = "\u001B[37m";
-
     //atributos da classe
     private List<Sala> lista_salas; //lista de salas existentes
     private List<Reserva> lista_reservas; //lista de reservas realizadas
@@ -73,13 +63,13 @@ public class GerenciadorDeSalas {
             }
         }
         if(salaExiste == false) throw new IOException();
-        else System.out.println(ANSI_GREEN + "  A sala " + ANSI_RESET +  nomeDaSala + ANSI_GREEN + " no local " + ANSI_RESET + this.local + ANSI_GREEN +" foi removida." + ANSI_RESET);
+        else System.out.println("  A sala "  +  nomeDaSala + " no local " + this.local  +" foi removida." );
         
         for(Reserva reserva : this.lista_reservas){
             if(reserva.getNome().equals(nomeDaSala)){
-                System.out.println(ANSI_YELLOW + "  A reserva da data " + ANSI_RESET + reserva.getInicio().getDayOfMonth() + "/" + reserva.getInicio().getMonthValue() + "/" + reserva.getInicio().getYear() +
-                                    ANSI_YELLOW +  " ate " + ANSI_RESET + reserva.getFim().getDayOfMonth() + "/" + reserva.getFim().getMonthValue() + "/" + reserva.getFim().getYear() + ANSI_YELLOW + " foi " +
-                                    ANSI_RED + "cancelada." + ANSI_RESET); 
+                System.out.println("  A reserva da data " + reserva.getInicio().getDayOfMonth() + "/" + reserva.getInicio().getMonthValue() + "/" + reserva.getInicio().getYear() +
+                                    " ate "  + reserva.getFim().getDayOfMonth() + "/" + reserva.getFim().getMonthValue() + "/" + reserva.getFim().getYear()  + " foi " +
+                                    "cancelada."); 
                 this.lista_reservas.remove(reserva);
             }
         }
@@ -121,7 +111,7 @@ public class GerenciadorDeSalas {
             if(sala.getNome().equals(nomeDaSala)) existe_sala = true;
         }
 
-        if(existe_sala == false) throw new SalaException(ANSI_RED + "  OPS! A sala " + ANSI_RESET + nomeDaSala + ANSI_RED +" nao foi encontrada." + ANSI_RESET);
+        if(existe_sala == false) throw new SalaException( "  OPS! A sala " + nomeDaSala  +" nao foi encontrada.");
 
         //verifica se esta sala ja possui uma reserva no horario desejado
         for(Reserva reserva : this.lista_reservas){
@@ -129,7 +119,7 @@ public class GerenciadorDeSalas {
                 if((dataInicial.isBefore(reserva.getInicio()) && dataFinal.isBefore(reserva.getInicio())) ||
                    (dataFinal.isAfter(reserva.getFim()) && dataFinal.isAfter(reserva.getFim()))) continue;
 
-                else throw new DataException(ANSI_RED + "  OPS! A sala " + ANSI_RESET + nomeDaSala + ANSI_RED +" ja possui possui uma reserva no horario desejado." + ANSI_RESET);
+                else throw new DataException( "  OPS! A sala "  + nomeDaSala +" ja possui possui uma reserva no horario desejado." );
             }
         }
 
@@ -187,7 +177,7 @@ public class GerenciadorDeSalas {
     public void imprimeReservasDaSala(String nomeSala){
         
         if(this.lista_reservas.size() == 0){
-            System.out.println(ANSI_PURPLE + "Nao existem reservas para a sala " + nomeSala + "." + ANSI_RESET);
+            System.out.println( "Nao existem reservas para a sala " + nomeSala + ".");
             return;
         }
 
