@@ -26,31 +26,23 @@ public class MarcadorDeReuniao {
     *                                                                                  *
     * -> Adiciona as datas de inicio e fim que a reuniao será realizada.               *
     ************************************************************************************/
-    public void marcarReuniaoEntre(LocalDate dataInicial, LocalDate dataFinal, Collection<String> listaDeParticipantes){
+    public void marcarReuniaoEntre(LocalDate dataInicial, LocalDate dataFinal, Collection<String> listaDeParticipantes) throws DataException, ParticipanteException{
       
-        try{
-            if(this.reuniao.getParticipantes().size() == 0) throw new ParticipanteException (ANSI_RED + "  OPS! Você quer marcar uma reunião sem participantes." + ANSI_RESET);
-            if(!dataInicial.isBefore(dataFinal)) throw new DataException(ANSI_RED + "  OPS! A data de inicio e fim da reunião nao esta em ordem cronologica." + ANSI_RESET);
+        if(this.reuniao.getParticipantes().size() == 0) throw new ParticipanteException (ANSI_RED + "  OPS! Você quer marcar uma reunião sem participantes.\n" + ANSI_RESET);
+        if(!dataInicial.isBefore(dataFinal)) throw new DataException(ANSI_RED + "  OPS! A data de inicio e fim da reunião nao esta em ordem cronologica.\n" + ANSI_RESET);
 
-            //checa se todos os participantes tem horario disponivel no horario da reuniao
-            for(String participante : listaDeParticipantes){
-                String [] separaDados = participante.split("\\*");
-                for(Participante p : this.reuniao.getAgendaParticipantes()){
-                    if(p.getNome().equals(separaDados[0]) && this.reuniao.getParticipantes().containsKey(separaDados[1])){
-                        if(p.getInicio().toLocalDate().isAfter(dataFinal) || (p.getFim().toLocalDate().isBefore(dataInicial))) throw new DataException(ANSI_RED + "  OPS! " + ANSI_PURPLE + p.getNome() + ANSI_RED +" com ID = " + ANSI_PURPLE + p.getID() + ANSI_RED +" não possuí disponibilidade para estar na reunião." + ANSI_RESET);
-                    }
+        //checa se todos os participantes tem horario disponivel no horario da reuniao
+        for(String participante : listaDeParticipantes){
+            String [] separaDados = participante.split("\\*");
+            for(Participante p : this.reuniao.getAgendaParticipantes()){
+                if(p.getNome().equals(separaDados[0]) && this.reuniao.getParticipantes().containsKey(separaDados[1])){
+                    if(p.getInicio().toLocalDate().isAfter(dataFinal) || (p.getFim().toLocalDate().isBefore(dataInicial))) throw new DataException(ANSI_RED + "  OPS! " + ANSI_PURPLE + p.getNome() + ANSI_RED +" com ID = " + ANSI_PURPLE + p.getID() + ANSI_RED +" não possuí disponibilidade para estar na reunião." + ANSI_RESET);
                 }
             }
+        }
 
-            this.reuniao.setInicio(dataInicial);
-            this.reuniao.setFim(dataFinal);
-        }
-        catch(ParticipanteException e){
-            System.err.println(e.getMessage());
-        }
-        catch(DataException e){
-            System.err.println(e.getMessage());
-        }
+        this.reuniao.setInicio(dataInicial);
+        this.reuniao.setFim(dataFinal);
     }
    
 

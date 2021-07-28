@@ -71,6 +71,7 @@ public class Main{
         return tempo_formatado;
     }
 
+
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         Collection <String> listaDeParticipantes = new LinkedList<>();
@@ -156,8 +157,10 @@ public class Main{
                                 String horario_reserva = input.nextLine();
                                 data_1 = horario_reserva.substring(0, 9);
                                 tempo_1 = horario_reserva.substring(13, 20);
+                                formata_tempo(tempo_1, data_1);
                                 data_2 = horario_reserva.substring(24, 33);
                                 tempo_2 = horario_reserva.substring(37, 44);
+                                formata_tempo(tempo_2, data_2);
                                 entradaCorreta = true;
                                 System.out.println();
                             }
@@ -165,7 +168,12 @@ public class Main{
                                 System.out.println(ANSI_RED + "  OPS! O horario digitado não está com o formato padrao pedido." + ANSI_RESET);
                                 System.out.println(ANSI_BLUE + "  >>> Insira novamente um horário para a reunião:   " + ANSI_RESET);
                             }
+                            catch(DateTimeException e){
+                                System.out.println(ANSI_RED + "  OPS! O horario digitado não eh valido." + ANSI_RESET);
+                                System.out.println(ANSI_BLUE + "  >>> Insira novamente um horário para a reunião:   " + ANSI_RESET);
+                            }
                         }
+
                         try{
                             gerenciador.reservaSalaChamada(nome_Sala,  formata_tempo(tempo_1, data_1), formata_tempo(tempo_2, data_2));
                             System.out.println(ANSI_CYAN + "=-=-=-=-=-=-=-=-=-= " + ANSI_GREEN + "RESERVA DE SALA REALIZADA COM SUCESSO " + ANSI_CYAN + "=-=-=-=-=-=-=-=-=-=-=\n" + ANSI_RESET);
@@ -201,14 +209,20 @@ public class Main{
                                 String horarioMarcado = input.nextLine();
                                 data01 = horarioMarcado.substring(0, 9);
                                 tempo01 = horarioMarcado.substring(13, 20);
+                                formata_tempo(tempo01, data01);
                                 data02 = horarioMarcado.substring(24, 33);
                                 tempo02 = horarioMarcado.substring(37, 44);
+                                formata_tempo(tempo02, data02);
                                 entrada_Correta = true;
                                 System.out.println();
                             }
                             catch (IndexOutOfBoundsException e){
-                                System.out.println(ANSI_RED + "  OPS! O horario digitado não está com o " + ANSI_PURPLE + "formato padrao" + ANSI_RED+" pedido." + ANSI_RESET);
-                                System.out.println(ANSI_BLUE + "  >>> Insira novamente o horário da reuniao:   " + ANSI_RESET);
+                                System.out.println(ANSI_RED + "  OPS! O horario digitado não está com o formato padrao pedido." + ANSI_RESET);
+                                System.out.println(ANSI_BLUE + "  >>> Insira novamente um horário para a reunião:   " + ANSI_RESET);
+                            }
+                            catch(DateTimeException e){
+                                System.out.println(ANSI_RED + "  OPS! O horario digitado não eh valido." + ANSI_RESET);
+                                System.out.println(ANSI_BLUE + "  >>> Insira novamente um horário para a reunião:   " + ANSI_RESET);
                             }
                         }
 
@@ -251,17 +265,55 @@ public class Main{
                             System.out.println(ANSI_YELLOW+ " >>>> INTERVALO DE HORARIO EM QUE TODOS OS PARTICIPANTES TEM DISPONIBILIDADE <<<<" + ANSI_RESET);
                             marcador.mostraSobreposicao();
                             System.out.print(ANSI_CYAN + "  1. Horario de inicio da reuniao < " +ANSI_YELLOW+"dd/mm/yyyy" + ANSI_CYAN + " >: "+ANSI_RESET);
-                            String inicio = input.nextLine();
+                            boolean dataValida = false;
+                            String inicio = "";
+                            while(dataValida == false){
+                                try{
+                                    inicio = input.nextLine();
+                                    formata_data(inicio);
+                                    dataValida = true;
+                                }
+                                catch(DateTimeException e){
+                                    System.out.println(ANSI_RED + "  OPS! A data digitado não eh valida." + ANSI_RESET);
+                                    System.out.println(ANSI_CYAN + "  Por favor, digite uma data valida:" + ANSI_RESET);
+                                    System.out.print(ANSI_CYAN + "  >>> "+ANSI_RESET);
+                                }
+                            }
+
                             System.out.print(ANSI_CYAN + "\n  2. Horario de termino da reuniao < " + ANSI_YELLOW +"dd/mm/yyyy" + ANSI_CYAN +" >: " + ANSI_RESET);
-                            String fim = input.nextLine();
+                            dataValida = false;
+                            String fim = "";
+                            while(dataValida == false){
+                                try{
+                                    fim = input.nextLine();
+                                    formata_data(fim);
+                                    dataValida = true;
+                                }
+                                catch(DateTimeException e){
+                                    System.out.println(ANSI_RED + "  OPS! A data digitada não eh valida." + ANSI_RESET);
+                                    System.out.println(ANSI_CYAN + "  Por favor, digite uma data valida:" + ANSI_RESET);
+                                    System.out.print(ANSI_CYAN + "  >>> "+ANSI_RESET);
+                                }
+                            }
+                            
                             System.out.println();
 
                             inicio_reuniao = formata_data(inicio);
                             fim_reuniao = formata_data(fim);
-                            
-                            marcador.marcarReuniaoEntre(inicio_reuniao, fim_reuniao, listaDeParticipantes);
+                            try{
+                                marcador.marcarReuniaoEntre(inicio_reuniao, fim_reuniao, listaDeParticipantes);
+                                System.out.println(ANSI_CYAN + "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= " + ANSI_GREEN + "REUNIAO MARCADA COM SUCESSO" + ANSI_CYAN +" =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n" + ANSI_RESET);
+                            }
+                            catch(DataException e){
+                                System.err.println(e.getMessage());
+                                System.out.println(ANSI_CYAN + "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=" + ANSI_RED + " A REUNIAO NAO PODE SER MARCADA " + ANSI_CYAN +"=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n" + ANSI_RESET);
+                            }
+                            catch(ParticipanteException e){
+                                System.err.println(e.getMessage());
+                                System.out.println(ANSI_CYAN + "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=" + ANSI_RED + " A REUNIAO NAO PODE SER MARCADA " + ANSI_CYAN +"=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n" + ANSI_RESET);
+                            }
                         }
-                        System.out.println(ANSI_CYAN + "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= " + ANSI_GREEN + "REUNIAO MARCADA COM SUCESSO" + ANSI_CYAN +" =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n" + ANSI_RESET);
+
                         if(help2() == 1) help();
                         break;
 
@@ -305,13 +357,35 @@ public class Main{
                         }
 
                         System.out.print(ANSI_CYAN + "\n  3. Horario de disponibilidade\nPor favor, utilize o formato < "+ ANSI_YELLOW + "dd/mm/yyyy - hh:mm:ss | dd/mm/yyyy - hh:mm:ss" + ANSI_YELLOW + " > :\n" + ANSI_RESET);
-                        String horario = input.nextLine();
+                        String data1 = "";
+                        String tempo1 = "";
+                        String data2 = "";
+                        String tempo2 = "";
+                        boolean entrada__Correta = false;
+                        while(entrada__Correta == false){
+                            try{
+                                String horario = input.nextLine();
+                                data1 = horario.substring(0, 10);
+                                tempo1 = horario.substring(13, 20);
+                                formata_tempo(tempo1, data1);
+                                data2 = horario.substring(24, 34);
+                                tempo2 = horario.substring(37, 44);
+                                formata_tempo(tempo2, data2);
+                                entrada__Correta = true;
+                                System.out.println();
+                            }
+                            catch (IndexOutOfBoundsException e){
+                                System.out.println(ANSI_RED + "  OPS! O horario digitado não está com o formato padrao pedido." + ANSI_RESET);
+                                System.out.println(ANSI_BLUE + "  >>> Insira novamente um horário para a reunião:   " + ANSI_RESET);
+                            }
+                            catch(DateTimeException e){
+                                System.out.println(ANSI_RED + "  OPS! O horario digitado não eh valido." + ANSI_RESET);
+                                System.out.println(ANSI_BLUE + "  >>> Insira novamente um horário para a reunião:   " + ANSI_RESET);
+                            }
+                        }
+
                         System.out.println(ANSI_CYAN + "\n=-=-=-=-=-=-=-=-=-= " + ANSI_GREEN + "DADOS COLETADOS COM SUCESSO" + ANSI_CYAN + " =-=-=-=-=-=-=-=-=-=\n" + ANSI_RESET);
 
-                        String data1 = horario.substring(0, 10);
-                        String tempo1 = horario.substring(13, 20);
-                        String data2 = horario.substring(24, 34);
-                        String tempo2 = horario.substring(37, 44);
                         
                         String nome_id = nome + "*" + id;
                         listaDeParticipantes.add(nome_id);
