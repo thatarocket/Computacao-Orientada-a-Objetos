@@ -185,6 +185,11 @@ public class GerenciadorDeSalas {
     * todas as suas reservas.                               *
     *********************************************************/
     public void imprimeReservasDaSala(String nomeSala){
+        
+        if(this.lista_reservas.size() == 0){
+            System.out.println(ANSI_PURPLE + "Nao existem reservas para a sala " + nomeSala + "." + ANSI_RESET);
+            return;
+        }
 
         boolean existeReserva = false;
         for(Reserva reserva : this.lista_reservas){
@@ -193,7 +198,7 @@ public class GerenciadorDeSalas {
                 existeReserva = true;
             }
         }
-        if(existeReserva == false) System.out.println("Não existem reservas para a sala " + nomeSala + ".");
+        if(existeReserva == false) System.out.println("Nao existem reservas para a sala " + nomeSala + ".");
     }
 
     public List<Reserva> getListaReservas(){

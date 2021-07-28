@@ -42,7 +42,10 @@ public class Reserva{
     }
 
     public String toString(){
-        return "Nome da reserva: " + this.nome + "  Inicio: " + this.start + "  Fim: " + this.finish;
+        return  ">> Inicio: " + this.start.getDayOfMonth() + "/" + this.start.getMonthValue() +  "/" + this.start.getYear() +
+                " as " + this.start.getHour() + "h" + this.start.getMinute() + "min"
+                + "  Fim: " + this.finish.getDayOfMonth() + "/" + this.finish.getMonthValue() +  "/" + this.finish.getYear() + 
+                " as " + this.finish.getHour() + "h" + this.finish.getMinute() + "min";
     }
 
     public String getNome(){

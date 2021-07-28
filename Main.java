@@ -32,7 +32,7 @@ public class Main{
 
     public static int help2(){
         Scanner sc = new Scanner(System.in);
-        System.out.println(ANSI_CYAN + "<<< Gostaria de rever a tabela de" + ANSI_BLUE + " COMANDOS" + ANSI_CYAN +" ??? Digite"+ ANSI_YELLOW + " 1 "+ ANSI_CYAN +"ou "+ ANSI_YELLOW +"2 "+ANSI_CYAN+">>>" + ANSI_RESET);
+        System.out.println(ANSI_CYAN + "<<< Gostaria de rever a tabela de" + ANSI_YELLOW + " COMANDOS" + ANSI_CYAN +" ??? Digite"+ ANSI_YELLOW + " 1 "+ ANSI_CYAN +"ou "+ ANSI_YELLOW +"2 "+ANSI_CYAN+">>>" + ANSI_RESET);
         System.out.println(ANSI_CYAN + "        "+ ANSI_GREEN + "SIM "+ANSI_CYAN + ": "+ANSI_YELLOW +"1"+ANSI_RED +"    NAO "+ ANSI_CYAN +":"+ANSI_YELLOW+" 2"+ ANSI_RESET);
         System.out.print(ANSI_CYAN + "        >>> " + ANSI_RESET);
         int resp = 0;
@@ -80,8 +80,8 @@ public class Main{
         LocalDate inicio_reuniao;
         LocalDate fim_reuniao;
 
-
-        System.out.print("Onde serao realizadas as reunioes? ");
+        System.out.println(ANSI_PURPLE+"*=*=*=*=*=*=*=*=*=*=*= " + ANSI_YELLOW + " INICIANDO O MARCADOR DE REUNIAO" + ANSI_PURPLE + " =*=*=**=*=*=*=*=*=*=*=*=*\n" + ANSI_RESET);
+        System.out.print(ANSI_CYAN + ">>>> Em qual local serao realizadas as reuniaoes? " + ANSI_RESET);
         String local = input.nextLine();
         System.out.println();
 
@@ -169,8 +169,8 @@ public class Main{
                             }
                         }
                         try{
-                            gerenciador.adicionaReserva(gerenciador.reservaSalaChamada(nome_Sala,  formata_tempo(tempo_1, data_1), formata_tempo(tempo_2, data_2)));
-                            System.out.println(ANSI_CYAN + "=-=-=-=-=-=-=-=-=-=-=-=-= " + ANSI_GREEN + "RESERVA DE SALA REALIZADA COM SUCESSO " + ANSI_CYAN + "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n" + ANSI_RESET);
+                            gerenciador.reservaSalaChamada(nome_Sala,  formata_tempo(tempo_1, data_1), formata_tempo(tempo_2, data_2));
+                            System.out.println(ANSI_CYAN + "=-=-=-=-=-=-=-=-=-= " + ANSI_GREEN + "RESERVA DE SALA REALIZADA COM SUCESSO " + ANSI_CYAN + "=-=-=-=-=-=-=-=-=-=-=\n" + ANSI_RESET);
                         }
                         catch(SalaException e){
                             System.err.println(e.getMessage());
@@ -190,8 +190,7 @@ public class Main{
                         System.out.print(ANSI_CYAN + "  1. Qual eh o nome da sala que a reuniao iria ser realizada? " + ANSI_RESET);
                         String nomeDaSala = input.nextLine();
                         System.out.println(ANSI_CYAN + "\n  2. Para qual horario estava marcado a reuniao?" + ANSI_RESET);
-                        System.out.println(ANSI_CYAN + "Por favor, utilize o seguinte formato < "+ ANSI_YELLOW +"dd/mm/yyyy - hh:mm:ss | dd/mm/yyyy - hh:mm:ss" + ANSI_CYAN + " > :"+ANSI_RESET);
-                        System.out.println();
+                        System.out.println(ANSI_CYAN + "  Por favor, utilize o seguinte formato < "+ ANSI_YELLOW +"dd/mm/yyyy - hh:mm:ss | dd/mm/yyyy - hh:mm:ss" + ANSI_CYAN + " > :"+ANSI_RESET);
 
                         boolean entrada_Correta = false;
                         String data01 = "";
@@ -225,44 +224,48 @@ public class Main{
                                 }
                             }
                         }
-                        if(existe == true) System.out.println(ANSI_CYAN + "=-=-=-=-=-=-=-=-=-="+ ANSI_GREEN + "REUNIAO CANCELADA COM SUCESSO" + ANSI_CYAN+" =-=-=-=-=-=-=-=-=-=" + ANSI_RESET);
+                        if(existe == true) System.out.println(ANSI_CYAN + "=-=-=-=-=-=-=-=-=-="+ ANSI_GREEN + "REUNIAO CANCELADA COM SUCESSO" + ANSI_CYAN+" =-=-=-=-=-=-=-=-=-=\n" + ANSI_RESET);
 
                         else{
                             System.out.println(ANSI_RED+" OPS! Parece que nao ha nenhuma reuniao marcada para este horario na sala "+ ANSI_RESET+nomeDaSala +ANSI_RED+". Logo, \nnao eh possivel cancelar essa reuniao."+ ANSI_RESET);
-                            System.out.println(ANSI_CYAN + "=-=-=-=-=-=-=-=-=-="+ ANSI_RED + " NAO FOI POSSIVEL CANCELAR A REUNIAO" + ANSI_CYAN+" =-=-=-=-=-=-=-=-=-=" + ANSI_RESET);
+                            System.out.println(ANSI_CYAN + "=-=-=-=-=-=-=-=-=-="+ ANSI_RED + " NAO FOI POSSIVEL CANCELAR A REUNIAO" + ANSI_CYAN+" =-=-=-=-=-=-=-=-=-=\n" + ANSI_RESET);
                         }
 
                         if(help2() == 1) help();
                         break;
-/////////////////////////////////////////////////////////////// 
+                
                 case "I": //IMPRIMIR AS RESERVAS DAS SALAS 
+                        System.out.println(ANSI_CYAN + "=-=-=-=-=-=-=-=-=-=-=-= RESERVAS DE CADA SALA =-=-=-=-=-=-=-=-=-=-=" + ANSI_RESET);
+                        if(gerenciador.getListaReservas().size() == 0) System.out.println(ANSI_RED + "  OPS! Nao existem salas reservadas ainda." + ANSI_RESET);
                         for(Reserva reserva : gerenciador.getListaReservas()){
-                            gerenciador.imprimeReservasDaSala(reserva.getNome()); 
-                        }
-                        
+                            System.out.println(ANSI_PURPLE+ ">>>>>>>>>>>>>>>>>>>>>>. SALA " + ANSI_RESET + reserva.getNome() + ANSI_PURPLE +" .<<<<<<<<<<<<<<<<<<<<<<<<<<<"  +ANSI_RESET);
+                            gerenciador.imprimeReservasDaSala(reserva.getNome());
+                            System.out.println(ANSI_PURPLE+ ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<"  +ANSI_RESET);
+                        }                                                                                              
+                        System.out.println(ANSI_CYAN + "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=" + ANSI_RESET);
                         if(help2() == 1) help();
                         break;
                 
                 case "M": //MOSTRA A SOBREPOSIÇÃO DE HORARIOS E MARCA UMA REUNIAO A PARTIR DELA
-                            if(listaDeParticipantes.size() == 0) System.out.println("OPS! Nao existe participantes na reuniao para mostrar a sobreposicao de horarios.\n");
-                            else{
-                                System.out.println("======== ESCOLHA UM HORARIO PARA A REUNIAO ========");
-                                marcador.mostraSobreposicao();
-                                System.out.println("===================================================");
-                                System.out.print("1. Horario de inicio da reuniao (dd/mm/yyyy): ");
-                                String inicio = input.nextLine();
-                                System.out.print("\n2. Horario de termino da reuniao (dd/mm/yyyy): ");
-                                String fim = input.nextLine();
-                                System.out.println();
+                        if(listaDeParticipantes.size() == 0) System.out.println("OPS! Nao existe participantes na reuniao para mostrar a sobreposicao de horarios.\n");
+                        else{
+                            System.out.println(ANSI_YELLOW+ "======== ESCOLHA UM HORARIO PARA A REUNIAO DADO OS HORARIOS DISPONIVEIS ========" + ANSI_RESET);
+                            marcador.mostraSobreposicao();
+                            System.out.println(ANSI_YELLOW + "===============================================================================" + ANSI_RESET);
+                            System.out.print(ANSI_CYAN + "1. Horario de inicio da reuniao < " +ANSI_YELLOW+"dd/mm/yyyy" + ANSI_CYAN + " >: "+ANSI_RESET);
+                            String inicio = input.nextLine();
+                            System.out.print(ANSI_CYAN + "\n2. Horario de termino da reuniao < " + ANSI_YELLOW +"dd/mm/yyyy" + ANSI_CYAN +" >: " + ANSI_RESET);
+                            String fim = input.nextLine();
+                            System.out.println();
 
-                                inicio_reuniao = formata_data(inicio);
-                                fim_reuniao = formata_data(fim);
-                                
-                                marcador.marcarReuniaoEntre(inicio_reuniao, fim_reuniao, listaDeParticipantes);
-                            }
+                            inicio_reuniao = formata_data(inicio);
+                            fim_reuniao = formata_data(fim);
+                            
+                            marcador.marcarReuniaoEntre(inicio_reuniao, fim_reuniao, listaDeParticipantes);
+                        }
 
-                            if(help2() == 1) help();
-                            break;
+                        if(help2() == 1) help();
+                        break;
 
                 case "O":
                         System.out.println("======== SOBREPOSICOES DOS HORÁRIOS DE REUNIAO ========");

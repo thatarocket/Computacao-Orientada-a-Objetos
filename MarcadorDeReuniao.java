@@ -70,11 +70,9 @@ public class MarcadorDeReuniao {
             this.reuniao.getParticipantes().put(separaDados[1], separaDados[0]);
             Participante obj_participante = new Participante(inicio, fim, separaDados[0], separaDados[1]);
 
-            if(inicio.isBefore(fim) == false) throw new DataException("ERRO indicaDisponibilidade: Datas incorretas para marcar reunião");
+            if(inicio.isBefore(fim) == false) throw new DataException("ERRO indicaDisponibilidade: Datas incorretas do participante.");
             
-                else{
-                this.reuniao.setAgendaParticipantes(obj_participante);
-            }
+            this.reuniao.setAgendaParticipantes(obj_participante);
         }
         catch(ParticipanteException e){
             System.err.println(e.getMessage());
