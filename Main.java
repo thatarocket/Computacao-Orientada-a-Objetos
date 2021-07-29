@@ -320,7 +320,8 @@ public class Main{
 
                 case "O":
                         System.out.println( "=-=-=-=-=-=-=- SOBREPOSICAO DOS HORARIOS DE REUNIAO -=-=-=-=-=-=-=-=" );
-                        marcador.mostraSobreposicao();
+                        if(listaDeParticipantes.size() == 0) System.out.println("  OPS! Nao existe participantes na reuniao para mostrar a sobreposicao de horarios.\n" );
+                        else marcador.mostraSobreposicao();
                         System.out.println( "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n" );
                         
                         if(help2() == 1) help();
