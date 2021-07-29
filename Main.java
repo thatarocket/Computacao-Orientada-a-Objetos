@@ -130,7 +130,7 @@ public class Main{
                         }
                         catch(SalaException e){
                             System.out.println(e.getMessage());
-                            System.out.println( "=-=-=-=-=-=-=-=-=-=-=-="  + " SALA DE REUNIAO NÃO FOI REMOVIDA " + "=-=-=-=-=-=-=-=-=-=-=-=\n" );
+                            System.out.println( "=-=-=-=-=-=-=-=-=-=-=-="  + " SALA DE REUNIAO NAO FOI REMOVIDA " + "=-=-=-=-=-=-=-=-=-=-=-=\n" );
                         }
 
                         if(help2() == 1) help();
