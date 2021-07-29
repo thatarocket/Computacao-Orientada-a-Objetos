@@ -96,7 +96,7 @@ public class Main{
                         System.out.println("=-=-=-=-=-=-=--=--=-=-=-=-= CRIANDO UMA SALA DE REUNIAO =-=-=-=-=-=-=--=--=-=-=-=-=-=");
                         System.out.print("  1. Qual sera o nome da sala? " );
                         String nome_sala = input.nextLine();
-                        System.out.print( "\n  2. Qual eh a capacidade máxima de pessoas nessa sala? ");
+                        System.out.print( "\n  2. Qual eh a capacidade maxima de pessoas nessa sala? ");
                         while(inputCorreto == false){
                             try{
                                 maxPessoas = input.nextInt();
@@ -105,7 +105,7 @@ public class Main{
                             }
                             catch(InputMismatchException e){
                                 input.nextLine();
-                                System.out.print( "\n  OPS! A capacidade maxima de pessoas digitada não eh um " +  "numero inteiro positivo" + ".\n" +"   >>>> Digite outro valor: " );
+                                System.out.print( "\n  OPS! A capacidade maxima de pessoas digitada nao eh um " +  "numero inteiro positivo" + ".\n" +"   >>>> Digite outro valor: " );
                             }
                         }
                         input.nextLine();
