@@ -46,24 +46,20 @@ public class MarcadorDeReuniao {
         String [] separaDados = participante.split("\\*");
         
         // Verifica a existencia do Participante na Reuniao
-        try{
-            if(this.reuniao == null){
-                this.reuniao = new Reuniao();
-            }
-
-            else{
-                //verifica se esse participante ja foi adicionado na reuniao
-                for (Map.Entry<String,String> id : this.reuniao.getParticipantes().entrySet()) {
-                    if(id.getKey().equals(separaDados[1])) throw new ParticipanteException("  OPS! O participante " + id.getValue() + " com ID = "+ id.getKey() + " ja foi adicionado na reuniao.");
-                }
-            }
-
-            if(inicio.isBefore(fim) == false) throw new DataException("  OPS! As datas de disponibilidade do participante não estão em ordem cronoçógina.");
-            
-            this.reuniao.getParticipantes().put(separaDados[1], separaDados[0]);
-            Participante obj_participante = new Participante(inicio, fim, separaDados[0], separaDados[1]);
-            this.reuniao.setAgendaParticipantes(obj_participante);
+        if(this.reuniao == null){
+            this.reuniao = new Reuniao();
         }
+
+        else{
+            //verifica se esse participante ja foi adicionado na reuniao
+            for (Map.Entry<String,String> id : this.reuniao.getParticipantes().entrySet()) {
+                if(id.getKey().equals(separaDados[1])) throw new ParticipanteException("  OPS! O participante " + id.getValue() + " com ID = "+ id.getKey() + " ja foi adicionado na reuniao.");
+            }
+        }
+        
+        this.reuniao.getParticipantes().put(separaDados[1], separaDados[0]);
+        Participante obj_participante = new Participante(inicio, fim, separaDados[0], separaDados[1]);
+        this.reuniao.setAgendaParticipantes(obj_participante);
     }
 
     /***********************************************************************************************************
