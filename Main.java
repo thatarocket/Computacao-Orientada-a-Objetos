@@ -390,7 +390,7 @@ public class Main{
                             System.out.println("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=" + " O PARTICIPANTE NAO FOI ADICIONADO " +"=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
 
                         }
-                        System.out.println("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=" + " O PARTICIPANTE ADICIONADO COM SUCESSO " +"=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
+                        System.out.println("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=" + " O PARTICIPANTE FOI ADICIONADO COM SUCESSO " +"=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
 
                         if(help2() == 1) help();
                         break;
