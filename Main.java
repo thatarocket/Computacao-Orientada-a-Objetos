@@ -126,7 +126,7 @@ public class Main{
                             System.out.println( "=-=-=-=-=-=-=-=-=-=-=-=" + " SALA DE REUNIAO REMOVIDA COM SUCESSO "+ "=-=-=-=-=-=-=-=-=-=-=-=-=\n");
                         }
                         catch(SalaException e){
-                            System.out.println("  OPS! A sala " + nomeSala  + " nao existente." );
+                            System.out.println(e.getMessage());
                             System.out.println( "=-=-=-=-=-=-=-=-=-=-=-="  + " SALA DE REUNIAO NÃO FOI REMOVIDA " + "=-=-=-=-=-=-=-=-=-=-=-=\n" );
                         }
 
