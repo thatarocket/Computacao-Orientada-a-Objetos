@@ -79,11 +79,14 @@ public class Main{
         GerenciadorDeSalas gerenciador = new GerenciadorDeSalas(local);
         String comando = "";
         help();
+        boolean aux = true;
 
         while(!comando.equals("F")){
-            System.out.print( "<INSIRA UM COMANDO> : ");
-            comando = input.nextLine();
-            System.out.println();
+            if(aux == true){
+                System.out.print( "<INSIRA UM COMANDO> : ");
+                comando = input.nextLine();
+                System.out.println();
+            }
 
             //COLOCAR VERIFICACOES EM CADA METODO, CASO PRECISE VERIFICAR SE JA FOI CRIADO SALAS/PARTICIPANTES/REUNIOES
             switch(comando) {
@@ -114,6 +117,7 @@ public class Main{
                         System.out.println("=-=-=-=-=-=-=--=--=-=-=-= "  + "SALA DE REUNIAO CRIADA COM SUCESSO "  + "=-=-=-=-=-=-=--=--=-=-=-=\n");
                         
                         if(help2() == 1) help();
+                        aux = true;
                         break;
                         
                 case "R": //REMOVE UMA SALA DE REUNIÃO EXISTENTE
@@ -130,6 +134,7 @@ public class Main{
                         }
 
                         if(help2() == 1) help();
+                        aux = true;
                         break;                
 
                 case "E": //RESERVA UMA SALA DE REUNIAO e ADICIONA A RESERVA NA LISTA DE RESERVAS
@@ -180,6 +185,7 @@ public class Main{
                         }
 
                         if(help2() == 1) help();
+                        aux = true;
                         break;
 
                 case "C": // CANCELA UMA REUNIÃO, ANTERIORMENTE MARCADA
@@ -236,6 +242,7 @@ public class Main{
                         }
 
                         if(help2() == 1) help();
+                        aux = true;
                         break;
                 
                 case "I": //IMPRIMIR AS RESERVAS DAS SALAS 
@@ -248,6 +255,7 @@ public class Main{
                         }                                                                                              
                         System.out.println( "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
                         if(help2() == 1) help();
+                        aux = true;
                         break;
                 
                 case "M": //MOSTRA A SOBREPOSIÇÃO DE HORARIOS E MARCA UMA REUNIAO A PARTIR DELA
@@ -307,6 +315,7 @@ public class Main{
                         }
 
                         if(help2() == 1) help();
+                        aux = true;
                         break;
 
                 case "O":
@@ -315,6 +324,7 @@ public class Main{
                         System.out.println( "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n" );
                         
                         if(help2() == 1) help();
+                        aux = true;
                         break;
                 
                 case "P": //ADICIONA UM PARTICIPANTE NA REUNIAO
@@ -393,6 +403,7 @@ public class Main{
                         System.out.println("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=" + " O PARTICIPANTE FOI ADICIONADO COM SUCESSO " +"=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
 
                         if(help2() == 1) help();
+                        aux = true;
                         break;
                 
                 case "F": break;
@@ -402,6 +413,7 @@ public class Main{
                     System.out.print( "<REINSIRA UM COMANDO> : " );
                     comando = input.nextLine();
                     System.out.println();
+                    aux = false;
                     break;
             }
         }
