@@ -41,7 +41,7 @@ public class MarcadorDeReuniao {
     *                                                                                           *
     *-> Adiciona um Participante na reuniao.                                                    *
     ********************************************************************************************/
-    public void indicaDisponibilidade(String participante, LocalDateTime inicio, LocalDateTime fim) {
+    public void indicaDisponibilidade(String participante, LocalDateTime inicio, LocalDateTime fim) throws ParticipanteException{
     //OBS: String participante recebe: nome+"*"+id
         String [] separaDados = participante.split("\\*");
         
@@ -54,22 +54,15 @@ public class MarcadorDeReuniao {
             else{
                 //verifica se esse participante ja foi adicionado na reuniao
                 for (Map.Entry<String,String> id : this.reuniao.getParticipantes().entrySet()) {
-                    if(id.getKey().equals(separaDados[1])) throw new ParticipanteException("OPS! O participante " + id.getValue() + " com ID = "+ id.getKey() + " ja foi adicionado na reuniao.");
+                    if(id.getKey().equals(separaDados[1])) throw new ParticipanteException("  OPS! O participante " + id.getValue() + " com ID = "+ id.getKey() + " ja foi adicionado na reuniao.");
                 }
             }
+
+            if(inicio.isBefore(fim) == false) throw new DataException("  OPS! As datas de disponibilidade do participante não estão em ordem cronoçógina.");
             
             this.reuniao.getParticipantes().put(separaDados[1], separaDados[0]);
             Participante obj_participante = new Participante(inicio, fim, separaDados[0], separaDados[1]);
-
-            if(inicio.isBefore(fim) == false) throw new DataException("ERRO indicaDisponibilidade: Datas incorretas do participante.");
-            
             this.reuniao.setAgendaParticipantes(obj_participante);
-        }
-        catch(ParticipanteException e){
-            System.err.println(e.getMessage());
-        }
-        catch(DataException e){
-            System.err.println(e.getMessage());
         }
     }
 

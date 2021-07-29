@@ -1,5 +1,4 @@
 import java.util.*;
-import java.time.LocalDate;
 import java.time.*;
 import java.io.*;
 
@@ -364,6 +363,7 @@ public class Main{
                                 data2 = horario.substring(24, 34);
                                 tempo2 = horario.substring(37, 44);
                                 formata_tempo(tempo2, data2);
+                                if(formata_tempo(tempo1, data1).isBefore(formata_tempo(tempo2, data2)) == false) new DateTimeException("  OPS! As datas de disponibilidade do participante não estão em ordem cronoçógina.");
                                 entrada__Correta = true;
                                 System.out.println();
                             }
@@ -382,8 +382,16 @@ public class Main{
                         
                         String nome_id = nome + "*" + id;
                         listaDeParticipantes.add(nome_id);
-                        marcador.indicaDisponibilidade(nome_id, formata_tempo(tempo1, data1), formata_tempo(tempo2, data2));
-                        
+                        try{
+                            marcador.indicaDisponibilidade(nome_id, formata_tempo(tempo1, data1), formata_tempo(tempo2, data2));
+                        }
+                        catch(ParticipanteException e){
+                            System.err.println(e.getMessage());
+                            System.out.println("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=" + " O PARTICIPANTE NAO FOI ADICIONADO " +"=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
+
+                        }
+                        System.out.println("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=" + " O PARTICIPANTE ADICIONADO COM SUCESSO " +"=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
+
                         if(help2() == 1) help();
                         break;
                 
