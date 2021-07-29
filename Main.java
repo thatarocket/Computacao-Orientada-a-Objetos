@@ -73,7 +73,7 @@ public class Main{
         LocalDate fim_reuniao;
 
         System.out.println("*=*=*=*=*=*=*=*=*=*=*= "  + " INICIANDO O MARCADOR DE REUNIAO"  + " =*=*=**=*=*=*=*=*=*=*=*=*\n");
-        System.out.print( ">>>> Em qual local serao realizadas as reuniaoes? " );
+        System.out.print( ">>>> Em qual local serao realizadas as reunioes? " );
         String local = input.nextLine();
         System.out.println();
 
