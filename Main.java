@@ -350,7 +350,7 @@ public class Main{
                                 ehNum = true;
                             }
                             catch(NumberFormatException e){
-                                System.out.println("  OPS! Esse ID " +  "não possuí apenas números inteiros" +  ". Por favor, insira outro ID: " );
+                                System.out.println("  OPS! Esse ID " +  "não possui apenas numeros inteiros" +  ". Por favor, insira outro ID: " );
                                 System.out.print( "  >>>  " );
                             }
                             catch(ParticipanteException e){
