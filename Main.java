@@ -11,7 +11,7 @@ public class Main{
         System.out.println( "|  1." + " Cria uma sala de reuniao " + "--------------------- "+ "<COMANDO>: S  "+"|");
         System.out.println("|  2." + " Remover uma sala de reuniao " + "------------------ "+ "<COMANDO>: R  " +"|");
         System.out.println("|  3." + " Reservar uma sala de reuniao " + "----------------- " +  "<COMANDO>: E  " +"|");
-        System.out.println("|  4." +" Cancelar uma reunião " +  "------------------------- " + "<COMANDO>: C  " +"|");
+        System.out.println("|  4." +" Cancelar uma reunião " +  "------------------------- " + "<COMANDO>: C " +"|");
         System.out.println("|  5." + " Imprimir as reservas das salas " + "--------------- " +  "<COMANDO>: I  " +"|");
         System.out.println( "|  6." + " Adicionar um participante na reuniao " + "--------- " + "<COMANDO>: P  " +"|");
         System.out.println("|  7." + " Marcar uma reuniao " + "--------------------------- " +  "<COMANDO>: M  "+ "|");
