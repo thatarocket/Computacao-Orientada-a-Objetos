@@ -125,7 +125,7 @@ public class Main{
                             gerenciador.removeSalaChamada(nomeSala);
                             System.out.println( "=-=-=-=-=-=-=-=-=-=-=-=" + " SALA DE REUNIAO REMOVIDA COM SUCESSO "+ "=-=-=-=-=-=-=-=-=-=-=-=-=\n");
                         }
-                        catch(IOException e){
+                        catch(SalaException e){
                             System.out.println("  OPS! A sala " + nomeSala  + " nao existente." );
                             System.out.println( "=-=-=-=-=-=-=-=-=-=-=-="  + " SALA DE REUNIAO NÃO FOI REMOVIDA " + "=-=-=-=-=-=-=-=-=-=-=-=\n" );
                         }

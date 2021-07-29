@@ -68,7 +68,7 @@ public class MarcadorDeReuniao {
         catch(ParticipanteException e){
             System.err.println(e.getMessage());
         }
-        catch(Exception e){
+        catch(DataException e){
             System.err.println(e.getMessage());
         }
     }

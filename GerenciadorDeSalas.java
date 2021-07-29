@@ -51,7 +51,7 @@ public class GerenciadorDeSalas {
     /****************************************************
     * Deve receber o nome da sala, a ser removida.      *
     *****************************************************/
-    public void removeSalaChamada(String nomeDaSala) throws IOException {
+    public void removeSalaChamada(String nomeDaSala) throws SalaException {
        
         boolean salaExiste = false;
 
@@ -62,8 +62,8 @@ public class GerenciadorDeSalas {
                 this.lista_salas.remove(sala);
             }
         }
-        if(salaExiste == false) throw new IOException();
-        else System.out.println("  A sala "  +  nomeDaSala + " no local " + this.local  +" foi removida." );
+        if(salaExiste == false) throw new SalaException( " OPS! A sala " + nomeDaSala + " nao existe.");
+        else System.out.println("  A sala "  +  nomeDaSala + " no local "  +" foi removida." );
         
         for(Reserva reserva : this.lista_reservas){
             if(reserva.getNome().equals(nomeDaSala)){
