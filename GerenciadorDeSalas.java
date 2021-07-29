@@ -36,11 +36,11 @@ public class GerenciadorDeSalas {
         try{
             //verifica se a sala a ser adicionada ja existe, pois so adicionamos NOVAS salas
             for(Sala sala : this.lista_salas){
-                if(sala.getNome().equals(nome)) throw new IOException();
+                if(sala.getNome().equals(nome)) throw new SalaException(" OPS! Esta sala ja foi criada anteriormente.");
             }
         }
-        catch(IOException e){
-            System.out.println("ERRO adicionaSalaChamada(): Esta sala ja existe.");
+        catch(SalaException e){
+            System.err.println(e.getMessage());
         }
 
         Sala nova_sala = new Sala(nome, this.local, capacidadeMaxima, descricao);
@@ -146,10 +146,10 @@ public class GerenciadorDeSalas {
                     this.lista_reservas.remove(cancelada);
                 }
             }
-            if(reservaExiste == false) throw new IOException();
+            if(reservaExiste == false) throw new Exception();
         }
-        catch(IOException e){
-            System.out.println("ERRO cancelaReserva(): Reserva inexistente.");
+        catch(Exception e){
+            System.out.println(" OPS! Esta reserva inexiste.");
         }
     }
 
