@@ -90,20 +90,26 @@ public class MarcadorDeReuniao {
         }
                    
         System.out.println("============================================================");
-
-        System.out.println( "INICIO DA DISPONIBILIDADE: " +  start.getDayOfMonth() + "/" + start.getMonthValue() + "/" + start.getYear() + " as " + start.getHour() + "h" + start.getMinute() + "min" );
-        System.out.println( "FIM DA DISPONIBILIDADE: " +  finish.getDayOfMonth() + "/" + finish.getMonthValue() + "/" + finish.getYear() + " as " + finish.getHour() + "h" + finish.getMinute() + "min");
-        
-        System.out.println( "============================================================");
        
         //Verifica se todos os participantes podem estar presente no horario determinado
+        boolean semDisp = false; //sem horarios em conjunto
         for(Participante participante : this.reuniao.getAgendaParticipantes()){ //TEMPO
             if(participante.getInicio().isBefore(start) && (participante.getFim().isBefore(finish) || participante.getFim().isEqual(finish))){
                 System.out.println("  ATENCAO: " + participante.getNome() +  " com ID "  + participante.getID()  + " nao possui disponibilidade no mesmo horario que os outros participantes.");
+                semDisp = true;
             }
             else if(participante.getInicio().isAfter(finish) && (participante.getFim().isAfter(finish) || participante.getInicio().isEqual(finish))){
                 System.out.println( "  ATENCAO: "  + participante.getNome()  + " com ID "  + participante.getID()  + " nao possui disponibilidade no mesmo horario que os outros participantes." );
+                semDisp = true;
             }
+        }
+        if(!semDisp) {
+            System.out.println( "INICIO DA DISPONIBILIDADE: " +  start.getDayOfMonth() + "/" + start.getMonthValue() + "/" + start.getYear() + " as " + start.getHour() + "h" + start.getMinute() + "min" );
+            System.out.println( "FIM DA DISPONIBILIDADE: " +  finish.getDayOfMonth() + "/" + finish.getMonthValue() + "/" + finish.getYear() + " as " + finish.getHour() + "h" + finish.getMinute() + "min");
+            System.out.println( "============================================================");
+        }
+        else {
+           System.out.println("============================================================"); 
         }
     }
 }
