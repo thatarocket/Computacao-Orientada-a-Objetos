@@ -97,14 +97,7 @@ public class GerenciadorDeSalas {
         this.lista_reservas.add(novaReserva);
     }
 
-    public int getCapacidade(String nome) {
-        for(Sala sala : this.lista_salas){
-            if(sala.getNome().equals(nome)) return sala.getCapacidade();
-        }
-        return -1; //nao existe a sala
-    }
-
-
+  
     /*************************************************************
     * Deve receber um nome de sala, um LocalDateTime que indica  *
     * o início da reserva e um outro LocalDateTime para indicar  *

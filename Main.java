@@ -2,7 +2,6 @@ import java.util.*;
 import java.time.*;
 import java.io.*;
 
-
 public class Main{
 
 
@@ -252,9 +251,16 @@ public class Main{
                 case "I": //IMPRIMIR AS RESERVAS DAS SALAS 
                         System.out.println("=-=-=-=-=-=-=-=-=-=-=-= RESERVAS DE CADA SALA =-=-=-=-=-=-=-=-=-=-=" );
                         if(gerenciador.getListaReservas().size() == 0) System.out.println( "  OPS! Nao existem salas reservadas ainda." );
+                        
                         for(Reserva reserva : gerenciador.getListaReservas()){
                             System.out.println( ">>>>>>>>>>>>>>>>>>>>>>. SALA "  + reserva.getNome()  +" .<<<<<<<<<<<<<<<<<<<<<<<<<<<");
                             gerenciador.imprimeReservasDaSala(reserva.getNome());
+            
+                            for(Sala sala : gerenciador.listaDeSalas()){
+                                if(sala.getNome() == reserva.getNome()){
+                                    System.out.println(">> Descricao da sala: " + sala.getObservacoes());
+                                }
+                            }                           
                             System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<" );
                         }                                                                                              
                         System.out.println( "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
@@ -267,95 +273,124 @@ public class Main{
                         if(listaDeParticipantes.size() == 0) System.out.println("  OPS! Nao existe participantes na reuniao para mostrar a sobreposicao de horarios.\n" );
                         else{
                             System.out.println(" >>>> INTERVALO DE HORARIO EM QUE TODOS OS PARTICIPANTES TEM DISPONIBILIDADE <<<<" );
-                            marcador.mostraSobreposicao();
+                                                                              
+                            System.out.print("  2. Data de inicio da reuniao < " +"dd/mm/yyyy" +  " >: ");
+                            boolean dataValida = false;
+                            String inicio = "";
 
-                            System.out.println(" 1. Digite o nome da sala a ser utilizada para a reuniao ");
-                            System.out.print(">>>> ");
-                            String nomeS = input.nextLine();
-                            int capacidade = gerenciador.getCapacidade(nomeS);
-
-                            if(capacidade == -1) System.out.println("-=-=-=-=-=- OPS! Essa sala nao existe! =-=-=-=-=-=-=-=-=-=-= ");
-                            else if(capacidade >= listaDeParticipantes.size()) {
-                                System.out.print("  2. Data de inicio da reuniao < " +"dd/mm/yyyy" +  " >: ");
-                                boolean dataValida = false;
-                                String inicio = "";
-                                while(dataValida == false){
-                                    try{
-                                        inicio = input.nextLine();
-                                        formata_data(inicio);
-                                        dataValida = true;
-                                    }
-                                    catch(DateTimeException e){
-                                        System.out.println( "  OPS! A data digitada nao eh valida.");
-                                        System.out.println( "  Por favor, digite uma data valida para o inicio da reuniao: " );
-                                        System.out.print( "  >>> ");
-                                    }
-                                    catch (IndexOutOfBoundsException e){
-                                        System.out.println( "  OPS! A data digitada nao esta com o formato padrao pedido." );
-                                        System.out.println( "  >>> Insira novamente uma data de inicio para a reuniao:  " );
-                                        System.out.print( "  >>> ");
-                                    }
-                                    catch(NumberFormatException e){
-                                        System.out.println( "  OPS! A data digitada nao esta com o formato padrao pedido." );
-                                        System.out.println( "  >>> Insira novamente uma data de inicio para a reuniao:  " );
-                                        System.out.print( "  >>> ");
-                                    }
-                                }
-
-                                System.out.print( "\n  3. Data de termino da reuniao < "  +"dd/mm/yyyy" +" >: ");
-                                dataValida = false;
-                                String fim = "";
-                                while(dataValida == false){
-                                    try{
-                                        fim = input.nextLine();
-                                        formata_data(fim);
-                                        dataValida = true;
-                                    }
-                                    catch(DateTimeException e){
-                                        System.out.println("  OPS! A data digitada nao eh valida.");
-                                        System.out.println( "  Por favor, digite uma data valida para o fim da reuniao:");
-                                        System.out.print( "  >>> ");
-                                    }
-                                    catch (IndexOutOfBoundsException e){
-                                        System.out.println( "  OPS! A data digitada nao esta com o formato padrao pedido." );
-                                        System.out.println( "  >>> Insira novamente uma data para a reuniao:   " );
-                                        System.out.print( "  >>> ");
-                                    }
-                                    catch(NumberFormatException e){
-                                        System.out.println( "  OPS! A data digitada nao esta com o formato padrao pedido." );
-                                        System.out.println( "  >>> Insira novamente uma data de inicio para a reuniao:  " );
-                                        System.out.print( "  >>> ");
-                                    }
-
-                                }
-                                
-                                System.out.println();
-
-                                inicio_reuniao = formata_data(inicio);
-                                fim_reuniao = formata_data(fim);
+                            while(dataValida == false){
                                 try{
-                                    marcador.marcarReuniaoEntre(inicio_reuniao, fim_reuniao, listaDeParticipantes);
-                                    System.out.println("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= " + "REUNIAO MARCADA COM SUCESSO" +" =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
+                                    inicio = input.nextLine();
+                                    formata_data(inicio);
+                                    dataValida = true;
                                 }
-                                catch(DataException e){
-                                    System.err.println(e.getMessage());
-                                    System.out.println( "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-="  + " A REUNIAO NAO PODE SER MARCADA " +"=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
+                                catch(DateTimeException e){
+                                    System.out.println( "  OPS! A data digitada nao eh valida.");
+                                    System.out.println( "  Por favor, digite uma data valida para o inicio da reuniao: " );
+                                    System.out.print( "  >>> ");
                                 }
-                                catch(ParticipanteException e){
-                                    System.err.println(e.getMessage());
-                                    System.out.println("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=" + " A REUNIAO NAO PODE SER MARCADA " +"=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
+                                catch (IndexOutOfBoundsException e){
+                                    System.out.println( "  OPS! A data digitada nao esta com o formato padrao pedido." );
+                                    System.out.println( "  >>> Insira novamente uma data de inicio para a reuniao:  " );
+                                    System.out.print( "  >>> ");
+                                }
+                                catch(NumberFormatException e){
+                                    System.out.println( "  OPS! A data digitada nao esta com o formato padrao pedido." );
+                                    System.out.println( "  >>> Insira novamente uma data de inicio para a reuniao:  " );
+                                    System.out.print( "  >>> ");
+                                }
+                            }
+
+                            System.out.print( "\n  3. Data de termino da reuniao < "  +"dd/mm/yyyy" +" >: ");
+                            dataValida = false;
+                            String fim = "";
+                            while(dataValida == false){
+                                try{
+                                    fim = input.nextLine();
+                                    formata_data(fim);
+                                    dataValida = true;
+                                }
+                                catch(DateTimeException e){
+                                    System.out.println("  OPS! A data digitada nao eh valida.");
+                                    System.out.println( "  Por favor, digite uma data valida para o fim da reuniao:");
+                                    System.out.print( "  >>> ");
+                                }
+                                catch (IndexOutOfBoundsException e){
+                                    System.out.println( "  OPS! A data digitada nao esta com o formato padrao pedido." );
+                                    System.out.println( "  >>> Insira novamente uma data para a reuniao:   " );
+                                    System.out.print( "  >>> ");
+                                }
+                                catch(NumberFormatException e){
+                                    System.out.println( "  OPS! A data digitada nao esta com o formato padrao pedido." );
+                                    System.out.println( "  >>> Insira novamente uma data de inicio para a reuniao:  " );
+                                    System.out.print( "  >>> ");
+                                }
+                            }
+                                
+                            System.out.println();
+
+                            inicio_reuniao = formata_data(inicio);
+                            fim_reuniao = formata_data(fim);
+                            try{
+                                marcador.marcarReuniaoEntre(inicio_reuniao, fim_reuniao, listaDeParticipantes);
+                                
+                                boolean msg = false;
+                                //checa se todos os participantes tem horario disponivel no horario da reuniao
+                                for(String participante : listaDeParticipantes){
+                                    String [] separaDados = participante.split("\\*");
+                                    for(Participante p : marcador.getReuniao().getAgendaParticipantes()){
+                                        if(p.getNome().equals(separaDados[0]) && marcador.getReuniao().getParticipantes().containsKey(separaDados[1])){
+                                            if(p.getInicio().toLocalDate().isAfter(fim_reuniao) || (p.getFim().toLocalDate().isBefore(inicio_reuniao))) msg = true;
+                                        }
+                                    }
                                 }
                                 
-                            }
-                            else {
-                                System.out.println(" =-=-=-=-=-=-= OPS! Nao eh possivel marcar reuniao nesta sala! =-=-=-=-=-=-=");
-                                System.out.println("A capacidade da sala " + nomeS + " eh menor que a quantidade dos participantes da reuniao");
-                            }
-                        }
+                                if(msg == true){
+                                    System.out.println("  OPS! Nao sao todos os participantes que estao disponiveis no horario da reuniao.");
+                                    System.out.println("  >>> Gostaria de marcar a reuniao mesmo assim? Digite um dos comandos a baixo:");
+                                    System.out.println("   " + "SIM " + ": " +"1" +"    NAO " +":"+" 2");
+                                    System.out.print( "   >>> " );
+                                    int resp = 0;
+                                    while(resp != 1 || resp != 2){
+                                        try{
+                                            resp = input.nextInt();
+                                            input.nextLine();
+                                            if(resp != 1 && resp != 2){
+                                                System.out.println( "OPS! Este comando "+ "nao eh valido"  +"." );
+                                                System.out.print( ">>> Digite novamente: ");
+                                            }
+                                            else break;
+                                        }
+                                        catch(InputMismatchException e1){
+                                            input.nextLine();
+                                            System.out.println( "OPS! Este comando "   + "nao eh valido"  +"." );
+                                            System.out.print( ">>>Digite novamente: " );
+                                        }
+                                    }
+                                    if(resp == 2){ //remove a reuniao
+                                        marcador.cancelarReuniao();
+                                        System.out.println( "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-="  + " A REUNIAO NAO PODE SER MARCADA " +"=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
+                                    }
+                                    else  System.out.println("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= " + "REUNIAO MARCADA COM SUCESSO" +" =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
+                                }
 
-                        if(help2() == 1) help();
-                        aux = true;
-                        break;
+                                else System.out.println("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= " + "REUNIAO MARCADA COM SUCESSO" +" =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
+                            }
+                            catch(DataException e){
+                                System.err.println(e.getMessage());
+                                System.out.println( "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-="  + " A REUNIAO NAO PODE SER MARCADA " +"=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
+                            }
+                            catch(ParticipanteException e){
+                                System.err.println(e.getMessage());
+                                System.out.println( "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-="  + " A REUNIAO NAO PODE SER MARCADA " +"=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
+                            }            
+                                
+                        }        
+                    }
+
+                    if(help2() == 1) help();
+                    aux = true;
+                    break;
 
                 case "O":
                         System.out.println( "=-=-=-=-=-=-=- SOBREPOSICAO DOS HORARIOS DE REUNIAO -=-=-=-=-=-=-=-=" );
