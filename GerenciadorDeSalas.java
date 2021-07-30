@@ -101,7 +101,7 @@ public class GerenciadorDeSalas {
         for(Sala sala : this.lista_salas){
             if(sala.getNome().equals(nome)) return sala.getCapacidade();
         }
-        return -1;
+        return -1; //nao existe a sala
     }
 
 
