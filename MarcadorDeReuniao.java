@@ -99,10 +99,10 @@ public class MarcadorDeReuniao {
         //Verifica se todos os participantes podem estar presente no horario determinado
         for(Participante participante : this.reuniao.getAgendaParticipantes()){ //TEMPO
             if(participante.getInicio().isBefore(start) && (participante.getFim().isBefore(finish) || participante.getFim().isEqual(finish))){
-                System.out.println("  ATENÇÃO: " + participante.getNome() +  " com ID "  + participante.getID()  + " nao possui disponibilidade no mesmo horario que os outros participantes.");
+                System.out.println("  ATENÇAO: " + participante.getNome() +  " com ID "  + participante.getID()  + " nao possui disponibilidade no mesmo horario que os outros participantes.");
             }
             else if(participante.getInicio().isAfter(finish) && (participante.getFim().isAfter(finish) || participante.getInicio().isEqual(finish))){
-                System.out.println( "  ATENÇÃO: "  + participante.getNome()  + " com ID "  + participante.getID()  + " nao possui disponibilidade no mesmo horario que os outros participantes." );
+                System.out.println( "  ATENÇAO: "  + participante.getNome()  + " com ID "  + participante.getID()  + " nao possui disponibilidade no mesmo horario que os outros participantes." );
             }
         }
     }

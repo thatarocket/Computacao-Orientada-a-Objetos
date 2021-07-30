@@ -162,12 +162,12 @@ public class Main{
                                 System.out.println();
                             }
                             catch (IndexOutOfBoundsException e){
-                                System.out.println("  OPS! O horario digitado não está com o formato padrao pedido." );
-                                System.out.println( "  >>> Insira novamente um horário para a reunião:   ");
+                                System.out.println("  OPS! O horario digitado não esta com o formato padrao pedido." );
+                                System.out.println( "  >>> Insira novamente um horario para a reuniao:   ");
                             }
                             catch(DateTimeException e){
-                                System.out.println("  OPS! O horario digitado não eh valido." );
-                                System.out.println("  >>> Insira novamente um horário para a reunião:   ");
+                                System.out.println("  OPS! O horario digitado nao eh valido." );
+                                System.out.println("  >>> Insira novamente um horario para a reuniao:   ");
                             }
                         }
 
@@ -274,7 +274,7 @@ public class Main{
                                     dataValida = true;
                                 }
                                 catch(DateTimeException e){
-                                    System.out.println( "  OPS! A data digitado não eh valida.");
+                                    System.out.println( "  OPS! A data digitado nao eh valida.");
                                     System.out.println( "  Por favor, digite uma data valida:" );
                                     System.out.print( "  >>> ");
                                 }
@@ -290,7 +290,7 @@ public class Main{
                                     dataValida = true;
                                 }
                                 catch(DateTimeException e){
-                                    System.out.println("  OPS! A data digitada não eh valida.");
+                                    System.out.println("  OPS! A data digitada nao eh valida.");
                                     System.out.println( "  Por favor, digite uma data valida:");
                                     System.out.print( "  >>> ");
                                 }
@@ -379,12 +379,12 @@ public class Main{
                                 System.out.println();
                             }
                             catch (IndexOutOfBoundsException e){
-                                System.out.println( "  OPS! O horario digitado não está com o formato padrao pedido." );
-                                System.out.println( "  >>> Insira novamente um horário para a reunião:   " );
+                                System.out.println( "  OPS! O horario digitado nao esta com o formato padrao pedido." );
+                                System.out.println( "  >>> Insira novamente um horario para a reunião:   " );
                             }
                             catch(DateTimeException e){
-                                System.out.println( "  OPS! O horario digitado não eh valido.");
-                                System.out.println( "  >>> Insira novamente um horário para a reunião:   " );
+                                System.out.println( "  OPS! O horario digitado nao eh valido.");
+                                System.out.println( "  >>> Insira novamente um horario para a reunião:   " );
                             }
                         }
 
