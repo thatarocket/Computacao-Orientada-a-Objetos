@@ -17,15 +17,15 @@ public class MarcadorDeReuniao {
     ************************************************************************************/
     public void marcarReuniaoEntre(LocalDate dataInicial, LocalDate dataFinal, Collection<String> listaDeParticipantes) throws DataException, ParticipanteException{
       
-        if(this.reuniao.getParticipantes().size() == 0) throw new ParticipanteException ("  OPS! Você quer marcar uma reunião sem participantes.\n");
-        if(!dataInicial.isBefore(dataFinal)) throw new DataException("  OPS! A data de inicio e fim da reunião nao esta em ordem cronologica.\n");
+        if(this.reuniao.getParticipantes().size() == 0) throw new ParticipanteException ("  OPS! Você quer marcar uma reuniao sem participantes.\n");
+        if(!dataInicial.isBefore(dataFinal)) throw new DataException("  OPS! A data de inicio e fim da reuniao nao esta em ordem cronologica.\n");
 
         //checa se todos os participantes tem horario disponivel no horario da reuniao
         for(String participante : listaDeParticipantes){
             String [] separaDados = participante.split("\\*");
             for(Participante p : this.reuniao.getAgendaParticipantes()){
                 if(p.getNome().equals(separaDados[0]) && this.reuniao.getParticipantes().containsKey(separaDados[1])){
-                    if(p.getInicio().toLocalDate().isAfter(dataFinal) || (p.getFim().toLocalDate().isBefore(dataInicial))) throw new DataException("  OPS! " + p.getNome() + " com ID = " + p.getID() + " não possuí disponibilidade para estar na reunião." );
+                    if(p.getInicio().toLocalDate().isAfter(dataFinal) || (p.getFim().toLocalDate().isBefore(dataInicial))) throw new DataException("  OPS! " + p.getNome() + " com ID = " + p.getID() + " nao possui disponibilidade para estar na reuniao." );
                 }
             }
         }
