@@ -11,7 +11,7 @@ public class Main{
         System.out.println("|  1." + " Cria uma sala de reuniao " + "--------------------- "+ "<COMANDO>: S  "+"|");
         System.out.println("|  2." + " Remover uma sala de reuniao " + "------------------ "+ "<COMANDO>: R  " +"|");
         System.out.println("|  3." + " Reservar uma sala de reuniao " + "----------------- " +  "<COMANDO>: E  " +"|");
-        System.out.println("|  4." +" Cancelar uma reunião " +  "------------------------- " + "<COMANDO>: C  " +"|");
+        System.out.println("|  4." +" Cancelar uma reuniao " +  "------------------------- " + "<COMANDO>: C  " +"|");
         System.out.println("|  5." + " Imprimir as reservas das salas " + "--------------- " +  "<COMANDO>: I  " +"|");
         System.out.println("|  6." + " Adicionar um participante na reuniao " + "--------- " + "<COMANDO>: P  " +"|");
         System.out.println("|  7." + " Marcar uma reuniao " + "--------------------------- " +  "<COMANDO>: M  "+ "|");
@@ -96,7 +96,7 @@ public class Main{
                         System.out.println("=-=-=-=-=-=-=--=--=-=-=-=-= CRIANDO UMA SALA DE REUNIAO =-=-=-=-=-=-=--=--=-=-=-=-=-=");
                         System.out.print("  1. Qual sera o nome da sala? " );
                         String nome_sala = input.nextLine();
-                        System.out.print( "\n  2. Qual eh a capacidade máxima de pessoas nessa sala? ");
+                        System.out.print( "\n  2. Qual eh a capacidade maxima de pessoas nessa sala? ");
                         while(inputCorreto == false){
                             try{
                                 maxPessoas = input.nextInt();
@@ -105,7 +105,7 @@ public class Main{
                             }
                             catch(InputMismatchException e){
                                 input.nextLine();
-                                System.out.print( "\n  OPS! A capacidade maxima de pessoas digitada não eh um " +  "numero inteiro positivo" + ".\n" +"   >>>> Digite outro valor: " );
+                                System.out.print( "\n  OPS! A capacidade maxima de pessoas digitada nao eh um " +  "numero inteiro positivo" + ".\n" +"   >>>> Digite outro valor: " );
                             }
                         }
                         input.nextLine();
@@ -130,7 +130,7 @@ public class Main{
                         }
                         catch(SalaException e){
                             System.out.println(e.getMessage());
-                            System.out.println( "=-=-=-=-=-=-=-=-=-=-=-="  + " SALA DE REUNIAO NÃO FOI REMOVIDA " + "=-=-=-=-=-=-=-=-=-=-=-=\n" );
+                            System.out.println( "=-=-=-=-=-=-=-=-=-=-=-="  + " SALA DE REUNIAO NAO FOI REMOVIDA " + "=-=-=-=-=-=-=-=-=-=-=-=\n" );
                         }
 
                         if(help2() == 1) help();
@@ -162,12 +162,12 @@ public class Main{
                                 System.out.println();
                             }
                             catch (IndexOutOfBoundsException e){
-                                System.out.println("  OPS! O horario digitado não está com o formato padrao pedido." );
-                                System.out.println( "  >>> Insira novamente um horário para a reunião:   ");
+                                System.out.println("  OPS! O horario digitado não esta com o formato padrao pedido." );
+                                System.out.println( "  >>> Insira novamente um horario para a reuniao:   ");
                             }
                             catch(DateTimeException e){
-                                System.out.println("  OPS! O horario digitado não eh valido." );
-                                System.out.println("  >>> Insira novamente um horário para a reunião:   ");
+                                System.out.println("  OPS! O horario digitado nao eh valido." );
+                                System.out.println("  >>> Insira novamente um horario para a reuniao:   ");
                             }
                         }
 
@@ -274,7 +274,7 @@ public class Main{
                                     dataValida = true;
                                 }
                                 catch(DateTimeException e){
-                                    System.out.println( "  OPS! A data digitado não eh valida.");
+                                    System.out.println( "  OPS! A data digitado nao eh valida.");
                                     System.out.println( "  Por favor, digite uma data valida:" );
                                     System.out.print( "  >>> ");
                                 }
@@ -290,7 +290,7 @@ public class Main{
                                     dataValida = true;
                                 }
                                 catch(DateTimeException e){
-                                    System.out.println("  OPS! A data digitada não eh valida.");
+                                    System.out.println("  OPS! A data digitada nao eh valida.");
                                     System.out.println( "  Por favor, digite uma data valida:");
                                     System.out.print( "  >>> ");
                                 }
@@ -320,7 +320,8 @@ public class Main{
 
                 case "O":
                         System.out.println( "=-=-=-=-=-=-=- SOBREPOSICAO DOS HORARIOS DE REUNIAO -=-=-=-=-=-=-=-=" );
-                        marcador.mostraSobreposicao();
+                        if(listaDeParticipantes.size() == 0) System.out.println("  OPS! Nao existe participantes na reuniao para mostrar a sobreposicao de horarios.\n" );
+                        else marcador.mostraSobreposicao();
                         System.out.println( "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n" );
                         
                         if(help2() == 1) help();
@@ -349,7 +350,7 @@ public class Main{
                                 ehNum = true;
                             }
                             catch(NumberFormatException e){
-                                System.out.println("  OPS! Esse ID " +  "não possuí apenas números inteiros" +  ". Por favor, insira outro ID: " );
+                                System.out.println("  OPS! Esse ID " +  "não possui apenas numeros inteiros" +  ". Por favor, insira outro ID: " );
                                 System.out.print( "  >>>  " );
                             }
                             catch(ParticipanteException e){
@@ -378,12 +379,12 @@ public class Main{
                                 System.out.println();
                             }
                             catch (IndexOutOfBoundsException e){
-                                System.out.println( "  OPS! O horario digitado não está com o formato padrao pedido." );
-                                System.out.println( "  >>> Insira novamente um horário para a reunião:   " );
+                                System.out.println( "  OPS! O horario digitado nao esta com o formato padrao pedido." );
+                                System.out.println( "  >>> Insira novamente um horario para a reunião:   " );
                             }
                             catch(DateTimeException e){
-                                System.out.println( "  OPS! O horario digitado não eh valido.");
-                                System.out.println( "  >>> Insira novamente um horário para a reunião:   " );
+                                System.out.println( "  OPS! O horario digitado nao eh valido.");
+                                System.out.println( "  >>> Insira novamente um horario para a reunião:   " );
                             }
                         }
 
