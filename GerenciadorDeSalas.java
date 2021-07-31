@@ -1,6 +1,5 @@
 import java.time.LocalDateTime;
 import java.util.*;
-import java.io.*;
 
 // >>> Classe que reserva as salas para as nossas reuniões <<<
 

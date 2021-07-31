@@ -359,7 +359,6 @@ public class Main{
                                                 System.out.println( "OPS! Este comando "+ "nao eh valido"  +"." );
                                                 System.out.print( ">>> Digite novamente: ");
                                             }
-                                            else break;
                                         }
                                         catch(InputMismatchException e1){
                                             input.nextLine();
@@ -384,7 +383,6 @@ public class Main{
                                 System.err.println(e.getMessage());
                                 System.out.println( "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-="  + " A REUNIAO NAO PODE SER MARCADA " +"=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
                             }            
-                                
                         }        
                     }
 
