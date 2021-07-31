@@ -24,7 +24,7 @@ public class MarcadorDeReuniao {
 
         if(this.reuniao == null) this.reuniao = new Reuniao();
         if(this.reuniao.getParticipantes().size() == 0) throw new ParticipanteException ("  OPS! Você quer marcar uma reuniao sem participantes.\n");
-        if(!dataInicial.isBefore(dataFinal)) throw new DataException("  OPS! A data de inicio e fim da reuniao nao esta em ordem cronologica.\n");
+        if(dataInicial.isAfter(dataFinal)) throw new DataException("  OPS! A data de inicio e fim da reuniao nao esta em ordem cronologica.\n");
 
         this.reuniao.setInicio(dataInicial);
         this.reuniao.setFim(dataFinal);
