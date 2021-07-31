@@ -16,16 +16,6 @@ public class Reserva{
         this.finish = finish;
     }
 
-    /*********************************************
-    * Cria uma sala e adiciona na lista de Salas *
-    **********************************************/
-    public Sala criaSala(String nome, String local, int capacidade, String observacoes){
-        
-        Sala nova_sala = new Sala(nome, local, capacidade, observacoes);
-    
-        return nova_sala;
-    }
-
     public String toString(){
         return  ">> Inicio: " + this.start.getDayOfMonth() + "/" + this.start.getMonthValue() +  "/" + this.start.getYear() +
                 " as " + this.start.getHour() + "h" + this.start.getMinute() + "min"
