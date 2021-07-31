@@ -260,7 +260,7 @@ public class Main{
                             gerenciador.imprimeReservasDaSala(reserva.getNome());
             
                             for(Sala sala : gerenciador.listaDeSalas()){
-                                if(sala.getNome() == reserva.getNome()){
+                                if(sala.getNome().equals(reserva.getNome())){
                                     System.out.println(">> Descricao da sala: " + sala.getObservacoes());
                                     System.out.println(">> Capacidade máxima suportada: " + sala.getCapacidade());
                                 }
