@@ -103,7 +103,7 @@ public class GerenciadorDeSalas {
     * o final da reserva. O método deve devolver uma instância   *
     * de Reserva.                                                *
     **************************************************************/
-    public Reserva reservaSalaChamada(String nomeDaSala, LocalDateTime dataInicial, LocalDateTime dataFinal) throws SalaException, DataException {
+    public Reserva reservaSalaChamada(String nomeDaSala, LocalDateTime dataInicial, LocalDateTime dataFinal) throws SalaException, ReservaException {
 
         boolean existe_sala = false;
         for(Sala sala : this.lista_salas){
@@ -118,7 +118,7 @@ public class GerenciadorDeSalas {
                 if((dataInicial.isBefore(reserva.getInicio()) && dataFinal.isBefore(reserva.getInicio())) ||
                    (dataFinal.isAfter(reserva.getFim()) && dataFinal.isAfter(reserva.getFim()))) continue;
 
-                else throw new DataException( "  OPS! A sala "  + nomeDaSala +" ja possui possui uma reserva no horario desejado." );
+                else throw new ReservaException( "  OPS! A sala "  + nomeDaSala +" ja possui possui uma reserva no horario desejado." );
             }
         }
 
@@ -145,10 +145,10 @@ public class GerenciadorDeSalas {
                     this.lista_reservas.remove(cancelada);
                 }
             }
-            if(reservaExiste == false) throw new Exception();
+            if(reservaExiste == false) throw new ReservaException(" OPS! Esta reserva inexiste.");
         }
-        catch(Exception e){
-            System.out.println(" OPS! Esta reserva inexiste.");
+        catch(ReservaException e){
+            System.err.println(e.getMessage());
         }
     }
 
