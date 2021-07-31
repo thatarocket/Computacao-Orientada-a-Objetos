@@ -256,11 +256,13 @@ public class Main{
                         
                         for(Reserva reserva : gerenciador.getListaReservas()){
                             System.out.println( ">>>>>>>>>>>>>>>>>>>>>>. SALA "  + reserva.getNome()  +" .<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+                
                             gerenciador.imprimeReservasDaSala(reserva.getNome());
             
                             for(Sala sala : gerenciador.listaDeSalas()){
                                 if(sala.getNome() == reserva.getNome()){
                                     System.out.println(">> Descricao da sala: " + sala.getObservacoes());
+                                    System.out.println(">> Capacidade máxima suportada: " + sala.getCapacidade());
                                 }
                             }                           
                             System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<" );
