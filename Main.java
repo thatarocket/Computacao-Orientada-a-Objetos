@@ -1,7 +1,4 @@
 import java.util.*;
-
-import javax.swing.plaf.TreeUI;
-
 import java.time.*;
 import java.io.*;
 
@@ -13,7 +10,7 @@ public class Main{
         System.out.println("|  1." + " Cria uma sala de reuniao " + "--------------------- "+ "<COMANDO>: S  "+"|");
         System.out.println("|  2." + " Remover uma sala de reuniao " + "------------------ "+ "<COMANDO>: R  " +"|");
         System.out.println("|  3." + " Reservar uma sala de reuniao " + "----------------- " +  "<COMANDO>: E  " +"|");
-        System.out.println("|  4." +" Cancelar uma reuniao " +  "------------------------- " + "<COMANDO>: C  " +"|");
+        System.out.println("|  4." +" Cancelar uma reserva " +  "------------------------- " + "<COMANDO>: C  " +"|");
         System.out.println("|  5." + " Imprimir as reservas das salas " + "--------------- " +  "<COMANDO>: I  " +"|");
         System.out.println("|  6." + " Adicionar um participante na reuniao " + "--------- " + "<COMANDO>: P  " +"|");
         System.out.println("|  7." + " Marcar uma reuniao " + "--------------------------- " +  "<COMANDO>: M  "+ "|");
@@ -194,12 +191,12 @@ public class Main{
                         aux = true;
                         break;
 
-                case "C": // CANCELA UMA REUNIÃO, ANTERIORMENTE MARCADA
+                case "C": // CANCELA UMA RESERVA, ANTERIORMENTE MARCADA
                         //lembrar de garantir que nao tem salas de nomes iguais
-                        System.out.println("=-=-=-=-=-=-=-=-=-= CANCELANDO UMA REUNIAO MARCADA =-=-=-=-=-=-=-=-=-=" );
-                        System.out.print( "  1. Qual eh o nome da sala que a reuniao iria ser realizada? " );
+                        System.out.println("=-=-=-=-=-=-=-=-=-= CANCELANDO UMA RESERVA MARCADA =-=-=-=-=-=-=-=-=-=" );
+                        System.out.print( "  1. Qual eh o nome da sala que a reserva estava marcada? " );
                         String nomeDaSala = input.nextLine();
-                        System.out.println( "\n  2. Para qual horario estava marcado a reuniao?" );
+                        System.out.println( "\n  2. Para qual horario estava marcado a reserva?" );
                         System.out.println("  Por favor, utilize o seguinte formato < " +"dd/mm/yyyy - hh:mm:ss | dd/mm/yyyy - hh:mm:ss" + " > :");
 
                         boolean entrada_Correta = false;
@@ -222,12 +219,12 @@ public class Main{
                             }
                             catch (IndexOutOfBoundsException e){
                                 System.out.println( "  OPS! O horario digitado nao esta com o formato padrao pedido.");
-                                System.out.println( "  >>> Insira novamente um horário para a reunião:   ");
+                                System.out.println( "  >>> Insira novamente o horário para a reserva:   ");
                                 System.out.print("  >>> ");
                             }
                             catch(DateTimeException e){
                                 System.out.println( "  OPS! O horario digitado nao eh valido.");
-                                System.out.println( "  >>> Insira novamente um horario para a reuniao:   " );
+                                System.out.println( "  >>> Insira novamente o horario para a reserva:   " );
                                 System.out.print("  >>> ");
                             }
                         }
@@ -242,11 +239,11 @@ public class Main{
                                 }
                             }
                         }
-                        if(existe == true) System.out.println("=-=-=-=-=-=-=-=-=-=" + "REUNIAO CANCELADA COM SUCESSO" +" =-=-=-=-=-=-=-=-=-=\n");
+                        if(existe == true) System.out.println("=-=-=-=-=-=-=-=-=-=" + "RESERVA CANCELADA COM SUCESSO" +" =-=-=-=-=-=-=-=-=-=\n");
 
                         else{
-                            System.out.println(" OPS! Parece que nao ha nenhuma reuniao marcada para este horario na sala "+nomeDaSala +". Logo, \nnao eh possivel cancelar essa reuniao.");
-                            System.out.println( "=-=-=-=-=-=-=-=-=-=" + " NAO FOI POSSIVEL CANCELAR A REUNIAO" +" =-=-=-=-=-=-=-=-=-=\n" );
+                            System.out.println(" OPS! Parece que nao ha nenhuma reserva marcada para este horario na sala "+nomeDaSala +". Logo, \nnao eh possivel cancela-la.");
+                            System.out.println( "=-=-=-=-=-=-=-=-=-=" + " NAO FOI POSSIVEL CANCELAR A RESERVA" +" =-=-=-=-=-=-=-=-=-=\n" );
                         }
 
                         if(help2() == 1) help();
@@ -263,9 +260,9 @@ public class Main{
                             gerenciador.imprimeReservasDaSala(reserva.getNome());
             
                             for(Sala sala : gerenciador.listaDeSalas()){
-                                if(sala.getNome().equals(reserva.getNome())){
+                                if(sala.getNome() == reserva.getNome()){
                                     System.out.println(">> Descricao da sala: " + sala.getObservacoes());
-                                    System.out.println(">> Capacidade maxima suportada: " + sala.getCapacidade());
+                                    System.out.println(">> Capacidade máxima suportada: " + sala.getCapacidade());
                                 }
                             }                           
                             System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<" );
@@ -451,14 +448,9 @@ public class Main{
                                 data2 = horario.substring(24, 34);
                                 tempo2 = horario.substring(37, 44);
                                 formata_tempo(tempo2, data2);
-                                if(formata_tempo(tempo1, data1).isAfter(formata_tempo(tempo2, data2))){
-                                    System.out.println("  OPS! As datas de disponibilidade do participante nao estao em ordem cronologina.");
-                                    System.out.println( "  >>> Insira novamente um horario para a reuniao:   " );
-                                }
-                                else{
-                                    entrada__Correta = true;
-                                    System.out.println();
-                                }
+                                if(formata_tempo(tempo1, data1).isBefore(formata_tempo(tempo2, data2)) == false) new DateTimeException("  OPS! As datas de disponibilidade do participante nao estao em ordem cronologina.");
+                                entrada__Correta = true;
+                                System.out.println();
                             }
                             catch (IndexOutOfBoundsException e){
                                 System.out.println( "  OPS! O horario digitado nao esta com o formato padrao pedido." );
