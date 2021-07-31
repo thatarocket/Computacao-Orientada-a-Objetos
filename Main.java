@@ -98,18 +98,20 @@ public class Main{
                         System.out.print( "\n  2. Qual eh a capacidade maxima de pessoas nessa sala? ");
                         while(inputCorreto == false){
                             try{
+                                System.out.print("\n >>> ");
                                 maxPessoas = input.nextInt();
+                                input.nextLine();
                                 if(maxPessoas > 0) inputCorreto = true;
-                                else throw new InputMismatchException();
+                                else System.out.println(" OPS! Parece que a capacidade máxima de pessoas esta incorreta. Digite novamente: ");
                             }
                             catch(InputMismatchException e){
                                 input.nextLine();
-                                System.out.print( "\n  OPS! A capacidade maxima de pessoas digitada nao eh um " +  "numero inteiro positivo" + ".\n" +"   >>>> Digite outro valor: " );
+                                System.out.print( "\n  OPS! A capacidade maxima de pessoas digitada nao eh um " +  "numero inteiro positivo" + ". Digite outro valor: " );
                             }
                         }
-                        input.nextLine();
-                        while(maxPessoas <= 0) throw new InputMismatchException();
-                        System.out.print("\n  3. Escreva uma breve descricao da sala em apenas uma linha: ");
+
+                        System.out.println();
+                        System.out.print("  3. Escreva uma breve descricao da sala em apenas uma linha: ");
                         String descricao = input.nextLine();
                         System.out.println();
                         gerenciador.adicionaSalaChamada(nome_sala, maxPessoas, descricao);
