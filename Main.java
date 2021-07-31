@@ -274,7 +274,10 @@ public class Main{
                 
                 case "M": //MOSTRA A SOBREPOSIÇÃO DE HORARIOS E MARCA UMA REUNIAO A PARTIR DELA
                         System.out.println( "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= MARCANDO UMA REUNIAO =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=" );
-                        if(listaDeParticipantes.size() == 0) System.out.println("  OPS! Nao existe participantes na reuniao para mostrar a sobreposicao de horarios.\n" );
+                        if(listaDeParticipantes.size() == 0){
+                            System.out.println("  OPS! Nao existe participantes na reuniao para mostrar a sobreposicao de horarios.\n" );
+                            System.out.println( "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-="  + " A REUNIAO NAO PODE SER MARCADA " +"=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
+                        }
                         else{                                                                                              
                             System.out.print("  1. Data de inicio da reuniao < " +"dd/mm/yyyy" +  " >: ");
                             boolean dataValida = false;
