@@ -1,4 +1,7 @@
 import java.util.*;
+
+import javax.swing.plaf.TreeUI;
+
 import java.time.*;
 import java.io.*;
 
@@ -448,9 +451,14 @@ public class Main{
                                 data2 = horario.substring(24, 34);
                                 tempo2 = horario.substring(37, 44);
                                 formata_tempo(tempo2, data2);
-                                if(formata_tempo(tempo1, data1).isAfter(formata_tempo(tempo2, data2)) == false) new DateTimeException("  OPS! As datas de disponibilidade do participante nao estao em ordem cronologina.");
-                                entrada__Correta = true;
-                                System.out.println();
+                                if(formata_tempo(tempo1, data1).isAfter(formata_tempo(tempo2, data2))){
+                                    System.out.println("  OPS! As datas de disponibilidade do participante nao estao em ordem cronologina.");
+                                    System.out.println( "  >>> Insira novamente um horario para a reuniao:   " );
+                                }
+                                else{
+                                    entrada__Correta = true;
+                                    System.out.println();
+                                }
                             }
                             catch (IndexOutOfBoundsException e){
                                 System.out.println( "  OPS! O horario digitado nao esta com o formato padrao pedido." );
