@@ -384,7 +384,6 @@ public class Main{
                                 System.out.println( "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-="  + " A REUNIAO NAO PODE SER MARCADA " +"=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
                             }            
                         }        
-                    }
 
                     if(help2() == 1) help();
                     aux = true;
