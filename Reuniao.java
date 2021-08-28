@@ -8,11 +8,10 @@ public class Reuniao {
     //Atributos da classe
     private LocalDate inicioReuniao; //data que ira comecar a reuniao
     private LocalDate finalReuniao; //data que ira encerrar a reuniao
-    private HashMap <String, String> dadosParticipantes; //recebe na primeira posicao o ID e em segundo o NOME do participante
     private List <Participante> agendaParticipantes; //lista de participantes
 
-    public void setParticipantes(HashMap<String, String> participantes){
-        this.dadosParticipantes = participantes;
+    public Reuniao() {
+       agendaParticipantes = new LinkedList<Participante>();
     }
 
     public void setInicio(LocalDate inicio){ 
@@ -27,11 +26,6 @@ public class Reuniao {
     public void setAgendaParticipantes(Participante participante){
         if(this.agendaParticipantes == null) this.agendaParticipantes = new LinkedList<>();
         this.agendaParticipantes.add(participante);
-    }
-    
-    public HashMap<String, String> getParticipantes() {
-        if(this.dadosParticipantes == null) this.dadosParticipantes = new HashMap<>();
-        return this.dadosParticipantes;
     }
 
     public List<Participante> getAgendaParticipantes() {

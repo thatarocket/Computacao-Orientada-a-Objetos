@@ -45,24 +45,7 @@ public class Main{
         return resp;
     }
 
-    //transforma a String DATA ("dd/mm/aaaa") em LocalDate
-    public static LocalDate formata_data (String data){
-
-        String[]separa = data.split("/");
-        LocalDate data_formatada = LocalDate.of(Integer.parseInt(separa[2]), Integer.parseInt(separa[1]), Integer.parseInt(separa[0]));
-        return data_formatada;
-    }
-
-    //transforma a String tempo ("hh:mm:ss") e data ("dd/mm/aaaa") em LocalDateTime
-    public static LocalDateTime formata_tempo (String tempo, String data){
-        
-        String[]separa = tempo.split(":");
-        LocalTime time = LocalTime.of(Integer.parseInt(separa[0]), Integer.parseInt(separa[1]), Integer.parseInt(separa[2]));
-        LocalDateTime tempo_formatado = LocalDateTime.of(formata_data(data), time);
-        return tempo_formatado;
-    }
-
-
+    
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         Collection <String> listaDeParticipantes = new LinkedList<>();
@@ -75,7 +58,8 @@ public class Main{
         String local = input.nextLine();
         System.out.println();
 
-        GerenciadorDeSalas gerenciador = new GerenciadorDeSalas(local);
+        GerenciadorDeSalas gerenciador = new GerenciadorDeSalas();
+        gerenciador.setLocal(local);
         String comando = "";
         help();
         boolean aux = true;
@@ -149,16 +133,17 @@ public class Main{
                         String tempo_1 = "";
                         String data_2 = "";
                         String tempo_2 = "";
-
+                        Horario h1 = new Horario();
+                        Horario h2 = new Horario();
                         while(entradaCorreta == false){
                             try{
                                 String horario_reserva = input.nextLine();
                                 data_1 = horario_reserva.substring(0, 9);
                                 tempo_1 = horario_reserva.substring(13, 20);
-                                formata_tempo(tempo_1, data_1);
+                                h1.formata_tempo(tempo_1, data_1);
                                 data_2 = horario_reserva.substring(24, 33);
                                 tempo_2 = horario_reserva.substring(37, 44);
-                                formata_tempo(tempo_2, data_2);
+                                h2.formata_tempo(tempo_2, data_2);
                                 entradaCorreta = true;
                                 System.out.println();
                             }
@@ -175,7 +160,7 @@ public class Main{
                         }
 
                         try{
-                            gerenciador.reservaSalaChamada(nome_Sala,  formata_tempo(tempo_1, data_1), formata_tempo(tempo_2, data_2));
+                            gerenciador.reservaSalaChamada(nome_Sala,  h1.formata_tempo(tempo_1, data_1), h2.formata_tempo(tempo_2, data_2));
                             System.out.println( "=-=-=-=-=-=-=-=-=-= " + "RESERVA DE SALA REALIZADA COM SUCESSO " +  "=-=-=-=-=-=-=-=-=-=-=\n");
                         }
                         catch(ReservaException e){
@@ -205,15 +190,18 @@ public class Main{
                         String data02 = "";
                         String tempo02 = "";
 
+                        Horario h_1 = new Horario();
+                        Horario h_2 = new Horario();
+
                         while(entrada_Correta == false){
                             try{
                                 String horarioMarcado = input.nextLine();
                                 data01 = horarioMarcado.substring(0, 9);
                                 tempo01 = horarioMarcado.substring(13, 20);
-                                formata_tempo(tempo01, data01);
+                                h_1.formata_tempo(tempo01, data01);
                                 data02 = horarioMarcado.substring(24, 33);
                                 tempo02 = horarioMarcado.substring(37, 44);
-                                formata_tempo(tempo02, data02);
+                                h_2.formata_tempo(tempo02, data02);
                                 entrada_Correta = true;
                                 System.out.println();
                             }
@@ -233,7 +221,7 @@ public class Main{
                         //checa se exitia uma reuniao marcado no horario informado
                         for(Reserva reserva : gerenciador.getListaReservas()){
                             if(reserva.getNome().equals(nomeDaSala)){
-                                if(reserva.getFim().isEqual(formata_tempo(tempo01, data01)) && reserva.getFim().isEqual(formata_tempo(tempo02, data02))){
+                                if(reserva.getFim().isEqual(h_1.formata_tempo(tempo01, data01)) && reserva.getFim().isEqual(h_2.formata_tempo(tempo02, data02))){
                                     existe = true;
                                     gerenciador.cancelaReserva(reserva);
                                 }
@@ -283,10 +271,12 @@ public class Main{
                             boolean dataValida = false;
                             String inicio = "";
 
+                            Horario h_inicio = new Horario();
+
                             while(dataValida == false){
                                 try{
                                     inicio = input.nextLine();
-                                    formata_data(inicio);
+                                    h_inicio.formata_data(inicio);
                                     dataValida = true;
                                 }
                                 catch(DateTimeException e){
@@ -309,10 +299,12 @@ public class Main{
                             System.out.print( "\n  2. Data de termino da reuniao < "  +"dd/mm/yyyy" +" >: ");
                             dataValida = false;
                             String fim = "";
+                            Horario h_fim = new Horario();
+
                             while(dataValida == false){
                                 try{
                                     fim = input.nextLine();
-                                    formata_data(fim);
+                                    h_fim.formata_data(fim);
                                     dataValida = true;
                                 }
                                 catch(DateTimeException e){
@@ -334,8 +326,8 @@ public class Main{
                                 
                             System.out.println();
 
-                            inicio_reuniao = formata_data(inicio);
-                            fim_reuniao = formata_data(fim);
+                            inicio_reuniao = h_inicio.formata_data(inicio);
+                            fim_reuniao = h_fim.formata_data(fim);
                             try{
                                 marcador.marcarReuniaoEntre(inicio_reuniao, fim_reuniao, listaDeParticipantes);
                                 
@@ -344,7 +336,7 @@ public class Main{
                                 for(String participante : listaDeParticipantes){
                                     String [] separaDados = participante.split("\\*");
                                     for(Participante p : marcador.getReuniao().getAgendaParticipantes()){
-                                        if(p.getNome().equals(separaDados[0]) && marcador.getReuniao().getParticipantes().containsKey(separaDados[1])){
+                                        if(p.getNome().equals(separaDados[0])){
                                             if(p.getInicio().toLocalDate().isAfter(fim_reuniao) || (p.getFim().toLocalDate().isBefore(inicio_reuniao))) msg = true;
                                         }
                                     }
@@ -384,11 +376,7 @@ public class Main{
                             catch(DataException e){
                                 System.err.println(e.getMessage());
                                 System.out.println( "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-="  + " A REUNIAO NAO PODE SER MARCADA " +"=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
-                            }
-                            catch(ParticipanteException e){
-                                System.err.println(e.getMessage());
-                                System.out.println( "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-="  + " A REUNIAO NAO PODE SER MARCADA " +"=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
-                            }            
+                            }           
                         }        
 
                     if(help2() == 1) help();
@@ -407,51 +395,27 @@ public class Main{
                 
                 case "P": //ADICIONA UM PARTICIPANTE NA REUNIAO
                         System.out.println( "=-=-=-=-=-=-=- COLETANDO DADOS DO PARTICIPANTE -=-=-=-=-=-=-=-=" );
-                        System.out.print( "  1. Nome do participante: ");
+                        System.out.print("  1. Nome do participante: ");
                         String nome = input.nextLine();
-                        System.out.print( "\n  2. Crie um ID de 6 numeros: " );
-                        boolean ehNum = false;
-                        String id = "";
-                        while(ehNum == false){
-                            try{
-                                id = input.nextLine();
-                                String [] separa = id.split("");
-                                for(String s : separa){
-                                    int n = Integer.parseInt(s);
-                                }
-                                for(String participante : listaDeParticipantes){
-                                    String[]sep = participante.split("\\*");
-                                    if(sep[1].equals(id)) throw new ParticipanteException( "  OPS! Esse ID " +  "ja existe"+ ". Por favor, insira outro ID: " );
-                                }
-                                if(separa.length != 6) throw new ParticipanteException( "  OPS! Esse ID " +  "nao possui 6 numeros" +  ". Por favor, insira outro ID: ");
-                                ehNum = true;
-                            }
-                            catch(NumberFormatException e){
-                                System.out.println("  OPS! Esse ID " +  "nao possui apenas numeros inteiros" +  ". Por favor, insira outro ID: " );
-                                System.out.print( "  >>>  " );
-                            }
-                            catch(ParticipanteException e){
-                                System.err.println(e.getMessage());
-                                System.out.print( "  >>>  ");
-                            }
-                        }
 
-                        System.out.print( "\n  3. Horario de disponibilidade\nPor favor, utilize o formato < " + "dd/mm/yyyy - hh:mm:ss | dd/mm/yyyy - hh:mm:ss"  + " > :\n");
+                        System.out.print( "\n  2. Horario de disponibilidade\nPor favor, utilize o formato < " + "dd/mm/yyyy - hh:mm:ss | dd/mm/yyyy - hh:mm:ss"  + " > :\n");
                         String data1 = "";
                         String tempo1 = "";
                         String data2 = "";
                         String tempo2 = "";
                         boolean entrada__Correta = false;
+                        Horario h11 = new Horario();
+                        Horario h22 = new Horario();
                         while(entrada__Correta == false){
                             try{
                                 String horario = input.nextLine();
                                 data1 = horario.substring(0, 10);
                                 tempo1 = horario.substring(13, 20);
-                                formata_tempo(tempo1, data1);
+                                h11.formata_tempo(tempo1, data1);
                                 data2 = horario.substring(24, 34);
                                 tempo2 = horario.substring(37, 44);
-                                formata_tempo(tempo2, data2);
-                                if(formata_tempo(tempo1, data1).isBefore(formata_tempo(tempo2, data2)) == false) new DateTimeException("  OPS! As datas de disponibilidade do participante nao estao em ordem cronologina.");
+                                h22.formata_tempo(tempo2, data2);
+                                if(h11.formata_tempo(tempo1, data1).isBefore(h22.formata_tempo(tempo2, data2)) == false) new DateTimeException("  OPS! As datas de disponibilidade do participante nao estao em ordem cronologina.");
                                 entrada__Correta = true;
                                 System.out.println();
                             }
@@ -468,16 +432,10 @@ public class Main{
                         System.out.println( "\n=-=-=-=-=-=-=-=-=-= "  + "DADOS COLETADOS COM SUCESSO"  + " =-=-=-=-=-=-=-=-=-=\n");
 
                         
-                        String nome_id = nome + "*" + id;
-                        listaDeParticipantes.add(nome_id);
-                        try{
-                            marcador.indicaDisponibilidade(nome_id, formata_tempo(tempo1, data1), formata_tempo(tempo2, data2));
-                        }
-                        catch(ParticipanteException e){
-                            System.err.println(e.getMessage());
-                            System.out.println("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=" + " O PARTICIPANTE NAO FOI ADICIONADO " +"=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
+                        listaDeParticipantes.add(nome);
+                        
+                        marcador.indicaDisponibilidadeDe(nome, h11.formata_tempo(tempo1, data1), h22.formata_tempo(tempo2, data2));
 
-                        }
                         System.out.println("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=" + " O PARTICIPANTE FOI ADICIONADO COM SUCESSO " +"=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
 
                         if(help2() == 1) help();

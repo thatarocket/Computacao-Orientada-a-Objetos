@@ -14,15 +14,19 @@ public class GerenciadorDeSalas {
 
     //atributos da classe
     private List<Sala> lista_salas; //lista de salas existentes
-    private List<Reserva> lista_reservas; //lista de reservas realizadas
+    private LinkedList<Reserva> lista_reservas; //lista de reservas realizadas
     private String local; //local da reserva
 
     //construtor da classe
-    public GerenciadorDeSalas(String local){
+    public GerenciadorDeSalas(){
         
-        this.local = local;
+        this.local = "";
         this.lista_salas = new LinkedList<>();
         this.lista_reservas = new  LinkedList<>();
+    }
+
+    public void setLocal(String local){
+        this.local = local;
     }
 
 
@@ -134,17 +138,18 @@ public class GerenciadorDeSalas {
     * esta reserva.                                     *
     *****************************************************/
     public void cancelaReserva(Reserva cancelada){
-
+        boolean reservaExiste = false;
         try{
-            boolean reservaExiste = false;
-
+           
             //verifica se a sala a ser removida existe
             for(Reserva reserva : this.lista_reservas){
                 if(reserva.equals(cancelada)){
                     reservaExiste = true;
                     this.lista_reservas.remove(cancelada);
+                    break;
                 }
             }
+            
             if(reservaExiste == false) throw new ReservaException(" OPS! Esta reserva inexiste.");
         }
         catch(ReservaException e){
