@@ -1,4 +1,4 @@
-# Computacao-Orientada-a-Objetos
+# Computação orientada a objetos
 
 **Autores: [Thais de Souza Rodrigues](https://github.com/thatarocket) e [Melissa Akie Inui](https://github.com/mee-akie)** </p>
 
